@@ -1,26 +1,106 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Brand palette — single primary accent: neon purple/magenta-violet */
+  --color-neon-50: #f9e8ff;
+  --color-neon-100: #f0c9ff;
+  --color-neon-200: #e29eff;
+  --color-neon-300: #d172ff;
+  --color-neon-400: #c149ff;
+  --color-neon-500: #b829e8;
+  --color-neon-600: #a020f0;
+  --color-neon-700: #8616cc;
+  --color-neon-800: #6a0fa1;
+  --color-neon-900: #4c0975;
+
+  /* Surfaces */
+  --color-ink-950: #05060d;
+  --color-ink-900: #0a0e1f;
+  --color-ink-800: #11162b;
+  --color-ink-700: #1a2040;
+
+  /* Foreground */
+  --color-cream: #f4f1ec;
+  --color-mist: #d8d4cc;
+
+  /* Type scale & families (registered via next/font CSS variables) */
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+
+  /* Neon glow shadows — used across logo, lines, dots, borders */
+  --shadow-neon-sm: 0 0 6px var(--color-neon-400), 0 0 12px var(--color-neon-500);
+  --shadow-neon-md: 0 0 8px var(--color-neon-300), 0 0 18px var(--color-neon-500), 0 0 36px var(--color-neon-600);
+  --shadow-neon-lg: 0 0 10px var(--color-neon-200), 0 0 24px var(--color-neon-400), 0 0 48px var(--color-neon-500), 0 0 96px var(--color-neon-700);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html,
+  body {
+    background: var(--color-ink-950);
+    color: var(--color-cream);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  ::selection {
+    background: var(--color-neon-500);
+    color: var(--color-ink-950);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* Logo neon glow filter — applied to outline letters to make them feel like real neon tubes */
+  .neon-glow {
+    filter:
+      drop-shadow(0 0 2px var(--color-neon-100))
+      drop-shadow(0 0 6px var(--color-neon-300))
+      drop-shadow(0 0 14px var(--color-neon-500))
+      drop-shadow(0 0 32px var(--color-neon-600));
+  }
+
+  .neon-glow-sm {
+    filter:
+      drop-shadow(0 0 2px var(--color-neon-200))
+      drop-shadow(0 0 5px var(--color-neon-400))
+      drop-shadow(0 0 10px var(--color-neon-600));
+  }
+
+  .neon-glow-off {
+    /* Unlit neon tube — barely visible glass on the brick wall */
+    filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.08));
+    color: rgba(255, 255, 255, 0.18);
+  }
+
+  /* Subtle "breathing" pulse on lit neon — barely noticeable */
+  @keyframes neon-breathe {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.94; }
+  }
+
+  .neon-breathe {
+    animation: neon-breathe 5s ease-in-out infinite;
+  }
+
+  /* Slow pulse for Prague dot on map */
+  @keyframes prague-pulse {
+    0%, 100% {
+      transform: scale(1);
+      filter:
+        drop-shadow(0 0 4px rgba(255, 255, 255, 0.9))
+        drop-shadow(0 0 10px var(--color-neon-300));
+    }
+    50% {
+      transform: scale(1.25);
+      filter:
+        drop-shadow(0 0 8px rgba(255, 255, 255, 1))
+        drop-shadow(0 0 22px var(--color-neon-200));
+    }
+  }
+
+  .prague-pulse {
+    animation: prague-pulse 2.6s ease-in-out infinite;
+    transform-origin: center;
+            transform-box: fill-box;
+  }
 }

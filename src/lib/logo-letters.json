@@ -1,0 +1,41 @@
+{
+  "totalWidth": 2121,
+  "totalHeight": 530,
+  "letters": [
+    {
+      "x": 13,
+      "w": 321,
+      "src": "/logo-letters/letter-00.png"
+    },
+    {
+      "x": 330,
+      "w": 534,
+      "src": "/logo-letters/letter-01.png"
+    },
+    {
+      "x": 860,
+      "w": 480,
+      "src": "/logo-letters/letter-02.png"
+    },
+    {
+      "x": 1335,
+      "w": 201,
+      "src": "/logo-letters/letter-03.png"
+    },
+    {
+      "x": 1546,
+      "w": 102,
+      "src": "/logo-letters/letter-04.png"
+    },
+    {
+      "x": 1645,
+      "w": 211,
+      "src": "/logo-letters/letter-05.png"
+    },
+    {
+      "x": 1860,
+      "w": 246,
+      "src": "/logo-letters/letter-06.png"
+    }
+  ]
+}
