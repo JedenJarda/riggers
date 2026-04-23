@@ -1,8 +1,13 @@
 {
   "Hero": {
-    "headline": "Your Local Riggers across Europe.",
-    "subhead": "When local isn't enough, call your friends.",
+    "eyebrow": "CZ · BASED · EU · TOURING",
+    "headlineMain": "Your Local Riggers",
+    "headlineAccent": "across Europe.",
+    "subhead": "When local isn't enough, call your friends. A collective of freelance riggers, arriving in your venue knowing the motors, the bridles, and the shortcut backstage.",
     "cta": "Book us",
+    "ctaSecondary": "or see who we are",
+    "credentials": "EST · CZ · IRATA · IPAF · A1",
+    "tagline": "17 VENUES · ACROSS EU · ONE CREW",
     "scroll": "Scroll"
   },
   "Nav": {

@@ -53,18 +53,17 @@ export const VIEW_Y = 0;
 const CAP_ANGLE = 28;
 
 // Map size & position. GLOBE_R is the radius of the cap edge in PROJ
-// units; bigger = bigger Europe on screen. CX anchors Prague to ~50 px
-// right of the 1140-wide centred *content frame* on a reference
-// 1440×900 viewport — the SVG itself is rendered full-bleed (no
-// max-width wrapper, otherwise slice math clips Eastern Europe at the
-// frame edge). Slice math on full 1440×900: scale = 900/540 = 1.667,
-// horizontal crop = (1600−1440)/2 = 80 px = 48 vbox units each side.
-// Target Prague screen_x = 1440/2 + 1140/2 − 50 = 1240.
-// Solving:  vbox_x = (1240 / 1.667) + 48 = 792.
-// On wider viewports Prague drifts slightly right of the frame edge,
+// units; bigger = bigger Europe on screen. CX anchors Prague so it sits
+// 80 px from the viewport's right edge on a reference 1440×900 —
+// symmetric to the text column's 80 px padding on the left. Slice math
+// on full 1440×900: scale = 900/540 = 1.667, horizontal crop =
+// (1600−1440)/2 = 80 px = 48 vbox units each side.
+// Target Prague screen_x = 1440 − 80 = 1360.
+// Solving:  vbox_x = (1360 / 1.667) + 48 = 864.
+// On wider viewports Prague drifts slightly further right of the frame,
 // which is acceptable — no abrupt clip line, full Europe stays visible.
 const GLOBE_R = 520;
-const GLOBE_CX = 792;
+const GLOBE_CX = 864;
 const GLOBE_CY = VIEW_H / 2;
 
 // Scale so a point at the cap's edge (CAP_ANGLE°) lands exactly on the

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
@@ -12,7 +12,9 @@ const sans = Inter({
   display: "swap",
 });
 
-const display = Space_Grotesk({
+// Plus Jakarta Sans — double-story "g" (closed loop bottom) avoids the
+// left-leaning tail Space Grotesk has on "gg". Clean geometric display.
+const display = Plus_Jakarta_Sans({
   subsets: ["latin", "latin-ext"],
   variable: "--font-display",
   display: "swap",

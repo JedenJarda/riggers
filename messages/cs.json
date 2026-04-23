@@ -1,8 +1,13 @@
 {
   "Hero": {
-    "headline": "Vaši lokální riggeři po celé Evropě.",
-    "subhead": "Když lokální nestačí, zavolej kamarády.",
+    "eyebrow": "SÍDLO V ČR · TURNÉ PO EU",
+    "headlineMain": "Vaši lokální riggeři",
+    "headlineAccent": "po celé Evropě.",
+    "subhead": "Když lokální tým nestačí, zavolejte přátele. Kolektiv freelance riggerů, kteří přijíždějí na vaše místo a znají motory, úvazky i všechny zkratky backstage.",
     "cta": "Zarezervujte si nás",
+    "ctaSecondary": "nebo se podívejte, kdo jsme",
+    "credentials": "EST · CZ · IRATA · IPAF · A1",
+    "tagline": "17 MÍST · PO CELÉ EU · JEDEN TÝM",
     "scroll": "Scroll"
   },
   "Nav": {

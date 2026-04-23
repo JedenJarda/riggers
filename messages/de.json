@@ -1,8 +1,13 @@
 {
   "Hero": {
-    "headline": "Eure Local Rigger in ganz Europa.",
-    "subhead": "Wenn local nicht reicht, ruft eure Freunde.",
+    "eyebrow": "CZ · BASIERT · EU · TOURING",
+    "headlineMain": "Eure Local Rigger",
+    "headlineAccent": "in ganz Europa.",
+    "subhead": "Wenn das Local-Team nicht reicht, ruft eure Freunde. Ein Kollektiv freiberuflicher Rigger, die in eurer Venue ankommen und die Motoren, Bridles und jede Abkürzung im Backstage kennen.",
     "cta": "Bucht uns",
+    "ctaSecondary": "oder seht, wer wir sind",
+    "credentials": "EST · CZ · IRATA · IPAF · A1",
+    "tagline": "17 VENUES · IN GANZ EU · EIN TEAM",
     "scroll": "Scrollen"
   },
   "Nav": {

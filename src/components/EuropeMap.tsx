@@ -114,6 +114,7 @@ export function EuropeMap({
                 delay: (0.15 + i * 0.08) * SLOW,
               },
             }}
+            style={{ willChange: "opacity" }}
           />
         ))}
       </g>
@@ -132,21 +133,27 @@ export function EuropeMap({
             </g>
           );
         }
+        // Wrapper <g> holds the static SVG translate; inner motion.g
+        // animates scale/opacity via CSS. Keeping them on separate
+        // elements avoids Chrome overwriting the SVG transform attribute
+        // with its CSS `transform` — that bug dropped dots to (0,0) in
+        // Chrome while Safari tolerated the conflict.
         return (
-          <motion.g
-            key={city.id}
-            transform={`translate(${city.x} ${city.y})`}
-            initial={{ opacity: 0, scale: 0.3 }}
-            animate={active ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.3 }}
-            transition={{
-              duration: 0.4 * SLOW,
-              delay: (0.7 + i * 0.08) * SLOW,
-              ease: "easeOut",
-            }}
-          >
-            <circle r={7.5} fill="url(#city-glow)" opacity={0.7} />
-            <circle r={2.2} fill="#fce6ff" />
-          </motion.g>
+          <g key={city.id} transform={`translate(${city.x} ${city.y})`}>
+            <motion.g
+              initial={{ opacity: 0, scale: 0.3 }}
+              animate={active ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.3 }}
+              transition={{
+                duration: 0.4 * SLOW,
+                delay: (0.7 + i * 0.08) * SLOW,
+                ease: "easeOut",
+              }}
+              style={{ willChange: "transform, opacity" }}
+            >
+              <circle r={7.5} fill="url(#city-glow)" opacity={0.7} />
+              <circle r={2.2} fill="#fce6ff" />
+            </motion.g>
+          </g>
         );
       })}
     </svg>
