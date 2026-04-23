@@ -15,40 +15,46 @@ type Props = {
 const NEON_GLOW =
   "drop-shadow(0 0 1px #fce6ff) drop-shadow(0 0 3px #f0c9ff) drop-shadow(0 0 8px #d172ff) drop-shadow(0 0 16px #b829e8)";
 
-// 30% slowdown vs. the base timing that matches /neon-lights.m4a peaks.
-// Audio is slowed proportionally in Hero via playbackRate = 1/SLOW,
-// so audio peaks still land on the flicker keyframes below.
-const SLOW = 1.3;
-
-// Per-letter flicker timed to audio peaks in /neon-lights.m4a (original):
+// Base timing matches /neon-lights.m4a peaks:
 //   0.460 (initial click), 0.905, 1.130, 1.320, 2.005, 2.750,
 //   3.410, 3.740, 3.860 — then ambient hum, faded out in Hero.
 //
-// Base SETTLE = 3.86s — once the last letter ("s") fires, every letter is
-// pinned at opacity 1 and stays there. No more flicker after that point.
+// Timeline splits at BREAKPOINT_BASE (2.005s — the moment "gg"/"c" stop
+// flickering and settle). Everything before runs at SLOW (30% slower than
+// base). Everything after runs at SLOW × SPEEDUP (30% faster than SLOW →
+// back close to real time). Audio mirrors this in Hero via a playbackRate
+// switch at the breakpoint, so audio peaks keep landing on flicker peaks.
+const SLOW = 1.3;
+// 0.7 → 0.595 (an extra 15% speed-up on top of the earlier compression).
+const SPEEDUP = 0.595;
 const BASE_DURATION = 4.0;
 const BASE_SETTLE = 3.86;
-export const LOGO_DURATION = BASE_DURATION * SLOW; // 5.2s
+export const BREAKPOINT_BASE = 2.005;
+export const BREAKPOINT_REAL = BREAKPOINT_BASE * SLOW;  // 2.6065s
+
+// Piecewise base → real time mapping. Keeps flicker keyframes in lockstep
+// with the audio's currentTime (which drifts identically when we switch
+// playbackRate from 1/SLOW to 1/(SLOW × SPEEDUP) at BREAKPOINT_REAL).
+function scaleTime(tBase: number): number {
+  if (tBase <= BREAKPOINT_BASE) return tBase * SLOW;
+  return BREAKPOINT_REAL + (tBase - BREAKPOINT_BASE) * SLOW * SPEEDUP;
+}
+
+export const LOGO_DURATION = scaleTime(BASE_DURATION);      // 4.4215s
+const FULL_SETTLE = scaleTime(BASE_SETTLE);                 // 4.2945s
 
 // One brief "flash" event: [t, peak] becomes a click-on/click-off pair
 // — explicit zero immediately before t and ~50ms after, so motion's
 // linear interpolation between keyframes can't create a slow ramp.
 type Flash = [number, number]; // [time, peakOpacity] in *base* seconds
-const STEP = 0.02 * SLOW; // short enough to read as instant
-// Each flash holds lit for OFF seconds before snapping back to 0.
-// 0.4s base (× SLOW = 0.52s scaled). Near the safe upper bound — any
-// higher and flashes on "gg"/"c" (peaks 0.46 → 0.905, gap 0.445) collide.
-const OFF = 0.4 * SLOW;
+const STEP = 0.02 * SLOW; // short enough to read as instant (all flashes
+                          // occur pre-breakpoint, so no SPEEDUP needed)
+const OFF = 0.4 * SLOW;   // flash-visible hold (pre-breakpoint only)
 
-// Once a letter crosses its partial-settle moment it stops flickering
-// and holds lit. Every subsequent letter that ignites steals 20% of the
-// current brightness from everything already lit ("the sign runs out of
-// juice"). At BASE_SETTLE the final letter ("z") lights and the whole
-// sign ramps back up to 1.0 — the crescendo.
+// Holds and ramps during/after the dim cascade.
 const PARTIAL = 0.85;
 const SAG_FACTOR = 0.8;   // each new settle dims the already-lit by 20%
 const RAMP_BASE = 0.12;   // base seconds of final ramp from sagged → 1.0
-const FULL_SETTLE = BASE_SETTLE * SLOW;
 
 // Global timeline of settle events — order matters; flicker() dims the
 // letter once for every event strictly later than its own settle and
@@ -60,11 +66,11 @@ function flicker(
   partialSettleBase: number,
   partialLevel = 1,
 ): { op: number[]; t: number[] } {
-  const partialSettle = partialSettleBase * SLOW;
+  const partialSettle = scaleTime(partialSettleBase);
   const op: number[] = [0];
   const t: number[] = [0];
   for (const [timeBase, peak] of flashes) {
-    const time = timeBase * SLOW;
+    const time = scaleTime(timeBase);
     if (time - STEP > t[t.length - 1]) {
       t.push(time - STEP);
       op.push(0);
@@ -86,7 +92,7 @@ function flicker(
   if (partialSettle < FULL_SETTLE) {
     let level = partialLevel;
     for (const eventBase of SETTLE_EVENTS_BASE) {
-      const event = eventBase * SLOW;
+      const event = scaleTime(eventBase);
       if (event <= partialSettle + STEP) continue;
       level *= SAG_FACTOR;
       // Hold prev level, then drop in one STEP — reads as a sharp sag,
@@ -97,9 +103,10 @@ function flicker(
       op.push(level);
     }
     // Final burst: ramp sagged level up to 1.0 at FULL_SETTLE.
+    // Post-breakpoint, so the ramp itself is compressed by SPEEDUP.
     const rampStart = Math.max(
       t[t.length - 1] + STEP,
-      FULL_SETTLE - RAMP_BASE * SLOW,
+      FULL_SETTLE - RAMP_BASE * SLOW * SPEEDUP,
     );
     if (rampStart > t[t.length - 1]) {
       t.push(rampStart);
@@ -176,8 +183,8 @@ export function Logo({ width = 280, className = "", started }: Props) {
         transition={
           started
             ? {
-                duration: 5 * SLOW,
-                delay: LOGO_DURATION + 0.6 * SLOW,
+                duration: 5 * SLOW * SPEEDUP,
+                delay: LOGO_DURATION + 0.6 * SLOW * SPEEDUP,
                 repeat: Infinity,
                 ease: "easeInOut",
               }

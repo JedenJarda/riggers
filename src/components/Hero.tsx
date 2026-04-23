@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { EuropeMap } from "./EuropeMap";
 import { LanguageSwitcher } from "./LanguageSwitcher";
-import { Logo, LOGO_DURATION } from "./Logo";
+import { Logo, LOGO_DURATION, BREAKPOINT_REAL } from "./Logo";
 import type { CountryPath, GlobeShape, ProjectedCity, Route } from "@/lib/europe-geo";
 
 type Props = {
@@ -19,16 +19,20 @@ type Props = {
   viewH: number;
 };
 
-// Matches the SLOW factor inside Logo — audio is slowed by the same ratio
-// so its peaks still align with the flicker keyframes.
+// Mirrors Logo's timing. Audio plays at 1/SLOW before the breakpoint and
+// at 1/(SLOW × SPEEDUP) after — audio peaks stay aligned with flicker
+// keyframes across the piecewise scale.
 const SLOW = 1.3;
-const AUDIO_PLAYBACK_RATE = 1 / SLOW;
+const SPEEDUP = 0.595;                             // must match Logo.tsx
+const AUDIO_RATE_PRE = 1 / SLOW;                   // 0.769
+const AUDIO_RATE_POST = 1 / (SLOW * SPEEDUP);      // ~1.293
 const AUDIO_VOLUME = 0.55;
+const BREAKPOINT_MS = BREAKPOINT_REAL * 1000;      // ~2606 ms
 
 // Audio fade-out: starts once the flicker has settled, ramps to silence
-// over FADE_MS. The remaining ambient hum never plays.
+// over FADE_MS. Post-breakpoint so the fade is also compressed.
 const FADE_START_MS = LOGO_DURATION * 1000;
-const FADE_MS = 800;
+const FADE_MS = 800 * SPEEDUP;                     // 560 ms
 const FADE_STEP_MS = 16;
 
 export function Hero({ countries, cities, routes, globe, viewX, viewY, viewW, viewH }: Props) {
@@ -43,7 +47,7 @@ export function Hero({ countries, cities, routes, globe, viewX, viewY, viewW, vi
     const a = audioRef.current;
     if (!a) return;
     a.volume = AUDIO_VOLUME;
-    a.playbackRate = AUDIO_PLAYBACK_RATE;
+    a.playbackRate = AUDIO_RATE_PRE;
 
     let detach: (() => void) | undefined;
     const begin = () => {
@@ -82,8 +86,14 @@ export function Hero({ countries, cities, routes, globe, viewX, viewY, viewW, vi
     const a = audioRef.current;
     if (!a) return;
 
+    // Flip audio to post-breakpoint rate exactly when flicker choreography
+    // transitions to its compressed timeline.
+    const rateTimeoutId = window.setTimeout(() => {
+      a.playbackRate = AUDIO_RATE_POST;
+    }, BREAKPOINT_MS);
+
     let intervalId: number | undefined;
-    const timeoutId = window.setTimeout(() => {
+    const fadeTimeoutId = window.setTimeout(() => {
       const start = performance.now();
       const startVol = a.volume;
       intervalId = window.setInterval(() => {
@@ -97,7 +107,8 @@ export function Hero({ countries, cities, routes, globe, viewX, viewY, viewW, vi
     }, FADE_START_MS);
 
     return () => {
-      window.clearTimeout(timeoutId);
+      window.clearTimeout(rateTimeoutId);
+      window.clearTimeout(fadeTimeoutId);
       if (intervalId !== undefined) window.clearInterval(intervalId);
     };
   }, [started]);
