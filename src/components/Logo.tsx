@@ -12,8 +12,15 @@ type Props = {
   started: boolean;
 };
 
+// Three-layer violet gradient + tight white core + saturation.
+// Brightness dropped — it was pushing the deep-violet halo past sRGB
+// clipping in Chrome (184,41,232 × 1.44 clipped to roughly magenta),
+// which read as "no colour". Instead, a mid-violet middle layer
+// bridges the deep halo and white core so the violet band has depth.
+// Saturation keeps the hue punchy. Safari renders these per-letter so
+// three small drop-shadows still composite locally.
 const NEON_GLOW =
-  "drop-shadow(0 0 1px #fce6ff) drop-shadow(0 0 3px #f0c9ff) drop-shadow(0 0 8px #d172ff) drop-shadow(0 0 16px #b829e8)";
+  "drop-shadow(0 0 14px #b829e8) drop-shadow(0 0 6px #d172ff) drop-shadow(0 0 2px #fce6ff) saturate(1.4)";
 
 // Base timing matches /neon-lights.m4a peaks:
 //   0.460 (initial click), 0.905, 1.130, 1.320, 2.005, 2.750,
@@ -175,7 +182,11 @@ export function Logo({ width = 280, className = "", started }: Props) {
       />
 
       {/* Lit overlay — wraps per-letter flickers with a slow breathing
-          pulse that fades in once the startup animation has settled. */}
+          pulse that fades in once the startup animation has settled.
+          Filter moved OFF this container and onto each letter below —
+          Safari was recomputing the whole aggregate glow buffer on
+          every flicker keyframe and dropping frames; per-letter filter
+          lets it cache seven small buffers locally and stay on-colour. */}
       <motion.div
         className="absolute inset-0"
         initial={{ opacity: 1 }}
@@ -190,7 +201,6 @@ export function Logo({ width = 280, className = "", started }: Props) {
               }
             : { duration: 0 }
         }
-        style={{ filter: NEON_GLOW }}
       >
         {letters.letters.map((letter, i) => {
           const f = FLICKER[i] ?? FLICKER[FLICKER.length - 1];
@@ -202,6 +212,7 @@ export function Logo({ width = 280, className = "", started }: Props) {
                 left: letter.x * scale,
                 width: letter.w * scale,
                 height,
+                filter: NEON_GLOW,
               }}
               initial={{ opacity: 0 }}
               animate={started ? { opacity: f.op } : { opacity: 0 }}

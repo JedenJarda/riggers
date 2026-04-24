@@ -38,12 +38,13 @@ export function EuropeMap({
       className="absolute inset-0 h-full w-full"
     >
       <defs>
+        {/* Single-pass blur (was two-pass 1.6 + 5). Safari ran the pair
+            on the CPU during pathLength animation → stutter. stdDeviation
+            3 captures the visual midpoint of the original halo. */}
         <filter id="neon-line-glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="1.6" result="b1" />
-          <feGaussianBlur stdDeviation="5" result="b2" />
+          <feGaussianBlur stdDeviation="3" result="b" />
           <feMerge>
-            <feMergeNode in="b2" />
-            <feMergeNode in="b1" />
+            <feMergeNode in="b" />
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
@@ -114,7 +115,6 @@ export function EuropeMap({
                 delay: (0.15 + i * 0.08) * SLOW,
               },
             }}
-            style={{ willChange: "opacity" }}
           />
         ))}
       </g>
@@ -148,7 +148,6 @@ export function EuropeMap({
                 delay: (0.7 + i * 0.08) * SLOW,
                 ease: "easeOut",
               }}
-              style={{ willChange: "transform, opacity" }}
             >
               <circle r={7.5} fill="url(#city-glow)" opacity={0.7} />
               <circle r={2.2} fill="#fce6ff" />
