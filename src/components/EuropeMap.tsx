@@ -1,17 +1,18 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import type { CountryPath, GlobeShape, ProjectedCity, Route } from "@/lib/europe-geo";
 import {
-  REVEAL_RADIUS_PRAGUE,
-  REVEAL_CORRIDOR_WIDTH,
-  REVEAL_RADIUS_CITY,
-  REVEAL_EDGE_SOFTNESS,
-  REVEAL_EXPAND_MS,
+  INITIAL_DELAY_MS,
+  STAGGER_MS,
   REVEAL_SPEED_PROJ_PER_SEC,
+  COUNTRY_REVEAL_MS,
+  COUNTRY_PULSE_MS,
+  ARC_HOLD_MS,
+  ARC_FADE_OUT_MS,
+  COUNTRY_PRE_OPACITY,
 } from "@/lib/reveal-config";
-import { LOGO_PRAGUE_TRIGGER, LOGO_LETTER_SETTLES_REAL } from "./Logo";
 
 type Props = {
   countries: CountryPath[];
@@ -22,21 +23,20 @@ type Props = {
   viewY: number;
   viewW: number;
   viewH: number;
-  /** Flicker orchestration signal. When true, the fog lifts around Prague,
-      route arcs fly out to their groups' settle triggers, and each
-      destination lights up as its arc arrives. */
+  /** When true the 6-second map intro begins — Prague + Czechia light
+      up, then planes stagger out to their cities, lighting up each
+      destination country on arrival. */
   active: boolean;
 };
 
-const EXPAND_S = REVEAL_EXPAND_MS / 1000;
-const SOFT_SOLID_STOP = `${((1 - REVEAL_EDGE_SOFTNESS) * 100).toFixed(0)}%`;
+type FlightPhase = "flying" | "landed" | "fading";
+
+const CZECHIA_NAME = "Czechia";
 
 export function EuropeMap({
   countries,
   cities,
   routes,
-  // globe prop retained for API parity — not currently rendered; the
-  // country silhouettes alone carry the curvature after clipAngle.
   globe: _globe,
   viewX,
   viewY,
@@ -46,48 +46,118 @@ export function EuropeMap({
 }: Props) {
   void _globe;
 
-  const prague = cities.find((c) => c.origin)!;
-  const routeById = new Map(routes.map((r) => [r.id, r]));
+  const prague = cities.find((c) => c.origin);
 
-  // State-flag-driven scheduling. motion's transition.delay doesn't
-  // reliably gate SVG attribute animations (initial `r:0` flashes to
-  // the target value on mount in some browsers), so instead each reveal
-  // shape mounts into the DOM only at its scheduled moment — then
-  // motion animates from initial → target with zero delay.
-  const [revealStage, setRevealStage] = useState<Set<string>>(new Set());
+  // Per-country lit flag. Czechia flips true at t=0 alongside the Prague
+  // marker; the rest flip when their first plane lands (if multiple
+  // cities share a country, the earliest landing wins — later planes
+  // just retrigger the pulse key below).
+  const [litCountries, setLitCountries] = useState<Set<string>>(new Set());
+
+  // Pulse keys force a fresh <motion.path> re-mount so the glow pulse
+  // animation runs every time a plane lands, even for countries that
+  // already went through their opacity fade-in.
+  const [countryPulseKey, setCountryPulseKey] = useState<Map<string, number>>(
+    new Map(),
+  );
+
+  // In-flight routes keyed by city id. Entries disappear once the arc
+  // finishes fading so only active/fading arcs sit in the DOM.
+  const [flights, setFlights] = useState<Map<string, FlightPhase>>(new Map());
+
+  // City ids whose plane has already landed — endpoint dots persist in
+  // this set after the arc has faded away.
+  const [landedCityIds, setLandedCityIds] = useState<Set<string>>(new Set());
+
+  const [pragueShown, setPragueShown] = useState(false);
 
   useEffect(() => {
     if (!active) return;
     const timeouts: number[] = [];
-    const markStarted = (id: string) => {
-      setRevealStage((prev) => {
-        if (prev.has(id)) return prev;
-        const next = new Set(prev);
-        next.add(id);
-        return next;
-      });
-    };
 
-    timeouts.push(
-      window.setTimeout(
-        () => markStarted("prague"),
-        LOGO_PRAGUE_TRIGGER * 1000,
-      ),
-    );
+    // t=0 — Prague dot + Czechia reveal. Delay 0 so they're the very
+    // first thing on screen when the map component becomes active.
+    setPragueShown(true);
+    setLitCountries((prev) => {
+      if (prev.has(CZECHIA_NAME)) return prev;
+      const next = new Set(prev);
+      next.add(CZECHIA_NAME);
+      return next;
+    });
+    setCountryPulseKey((prev) => {
+      const next = new Map(prev);
+      next.set(CZECHIA_NAME, (next.get(CZECHIA_NAME) ?? 0) + 1);
+      return next;
+    });
+
     for (const route of routes) {
-      const settleTime = LOGO_LETTER_SETTLES_REAL[route.groupIdx];
-      const flightDuration = route.length / REVEAL_SPEED_PROJ_PER_SEC;
+      const launchAt = INITIAL_DELAY_MS + route.launchIdx * STAGGER_MS;
+      const flightMs = (route.length / REVEAL_SPEED_PROJ_PER_SEC) * 1000;
+      const landAt = launchAt + flightMs;
+      const fadeStartAt = landAt + ARC_HOLD_MS;
+      const fadeDoneAt = fadeStartAt + ARC_FADE_OUT_MS;
+
       timeouts.push(
-        window.setTimeout(
-          () => markStarted(`corridor:${route.id}`),
-          settleTime * 1000,
-        ),
+        window.setTimeout(() => {
+          setFlights((prev) => {
+            const next = new Map(prev);
+            next.set(route.id, "flying");
+            return next;
+          });
+        }, launchAt),
       );
+
       timeouts.push(
-        window.setTimeout(
-          () => markStarted(`city:${route.id}`),
-          (settleTime + flightDuration) * 1000,
-        ),
+        window.setTimeout(() => {
+          setFlights((prev) => {
+            const next = new Map(prev);
+            next.set(route.id, "landed");
+            return next;
+          });
+          setLitCountries((prev) => {
+            if (prev.has(route.country)) return prev;
+            const next = new Set(prev);
+            next.add(route.country);
+            return next;
+          });
+          setCountryPulseKey((prev) => {
+            // Fire the arrival pulse only on the first plane to reach a
+            // given country — subsequent landings (e.g. Germany's 5
+            // cities) would otherwise stack into a strobe effect.
+            if (prev.has(route.country)) return prev;
+            const next = new Map(prev);
+            next.set(route.country, 1);
+            return next;
+          });
+          setLandedCityIds((prev) => {
+            if (prev.has(route.id)) return prev;
+            const next = new Set(prev);
+            next.add(route.id);
+            return next;
+          });
+        }, landAt),
+      );
+
+      timeouts.push(
+        window.setTimeout(() => {
+          setFlights((prev) => {
+            if (prev.get(route.id) !== "landed") return prev;
+            const next = new Map(prev);
+            next.set(route.id, "fading");
+            return next;
+          });
+        }, fadeStartAt),
+      );
+
+      timeouts.push(
+        window.setTimeout(() => {
+          setFlights((prev) => {
+            if (!prev.has(route.id)) return prev;
+            const next = new Map(prev);
+            next.delete(route.id);
+            return next;
+          });
+        }, fadeDoneAt),
       );
     }
 
@@ -103,9 +173,6 @@ export function EuropeMap({
       className="absolute inset-0 h-full w-full"
     >
       <defs>
-        {/* Single-pass blur on the visible violet arcs. Safari used to
-            run a two-pass chain (1.6 + 5) on the CPU per frame of the
-            pathLength animation and stuttered. */}
         <filter id="neon-line-glow" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="3" result="b" />
           <feMerge>
@@ -114,180 +181,143 @@ export function EuropeMap({
           </feMerge>
         </filter>
 
-        <radialGradient id="city-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#fce6ff" stopOpacity="1" />
-          <stop offset="40%" stopColor="#c149ff" stopOpacity="0.85" />
-          <stop offset="100%" stopColor="#a020f0" stopOpacity="0" />
-        </radialGradient>
-        <radialGradient id="prague-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
-          <stop offset="35%" stopColor="#f0c9ff" stopOpacity="0.95" />
-          <stop offset="100%" stopColor="#b829e8" stopOpacity="0" />
-        </radialGradient>
+        {/* Fat blur used during the per-country arrival pulse. */}
+        <filter id="country-pulse-glow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="4" />
+        </filter>
 
-        <linearGradient id="country-fill" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id="country-fill-lit" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#3a4a96" />
           <stop offset="100%" stopColor="#222b6a" />
         </linearGradient>
-
-        {/* Soft-edged white blob used everywhere in the reveal mask —
-            solid core fading to transparent over the last
-            REVEAL_EDGE_SOFTNESS of its radius. */}
-        <radialGradient id="reveal-soft" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="white" stopOpacity="1" />
-          <stop offset={SOFT_SOLID_STOP} stopColor="white" stopOpacity="1" />
-          <stop offset="100%" stopColor="white" stopOpacity="0" />
-        </radialGradient>
-
-        {/* Fog-of-war mask. Black everywhere (= hidden) until a reveal
-            shape paints white (= visible) on top. Prague pops first,
-            then each route's corridor traces out as the plane flies,
-            and each destination blooms when its arc arrives. */}
-        <mask
-          id="fog-of-war"
-          maskUnits="userSpaceOnUse"
-          x={viewX}
-          y={viewY}
-          width={viewW}
-          height={viewH}
-        >
-          <rect x={viewX} y={viewY} width={viewW} height={viewH} fill="black" />
-
-          {revealStage.has("prague") && (
-            <motion.circle
-              cx={prague.x}
-              cy={prague.y}
-              fill="url(#reveal-soft)"
-              initial={{ r: 0 }}
-              animate={{ r: REVEAL_RADIUS_PRAGUE }}
-              transition={{ duration: EXPAND_S, ease: "easeOut" }}
-            />
-          )}
-
-          {routes.map((route) => {
-            const dest = cities.find((c) => c.id === route.id);
-            if (!dest) return null;
-            const flightDuration = route.length / REVEAL_SPEED_PROJ_PER_SEC;
-            const corridorActive = revealStage.has(`corridor:${route.id}`);
-            const cityActive = revealStage.has(`city:${route.id}`);
-            return (
-              <Fragment key={route.id}>
-                {corridorActive && (
-                  <motion.path
-                    d={route.d}
-                    stroke="white"
-                    strokeWidth={REVEAL_CORRIDOR_WIDTH}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    fill="none"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: flightDuration, ease: "linear" }}
-                  />
-                )}
-                {cityActive && (
-                  <motion.circle
-                    cx={dest.x}
-                    cy={dest.y}
-                    fill="url(#reveal-soft)"
-                    initial={{ r: 0 }}
-                    animate={{ r: REVEAL_RADIUS_CITY }}
-                    transition={{ duration: EXPAND_S, ease: "easeOut" }}
-                  />
-                )}
-              </Fragment>
-            );
-          })}
-        </mask>
+        <linearGradient id="country-fill-dim" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#161b3d" />
+          <stop offset="100%" stopColor="#0d1128" />
+        </linearGradient>
       </defs>
 
-      {/* Everything visible is gated on `active`. Pre-mount (SSR + the
-          first client render before the Hero mount effect fires) the
-          map is blank — no countries, no routes, no dots. This avoids
-          a flash of un-masked strokes during hydration, which can
-          otherwise briefly reveal the whole sign. Once Hero flips
-          active=true, motion's initial states pick up correctly and
-          the fog-of-war choreography runs from zero. */}
-      {active && (
-        <>
-          {/* Country silhouettes, hidden under the fog-of-war mask
-              until the reveal shapes above paint them in. */}
-          <g mask="url(#fog-of-war)">
-            {countries.map((c) => (
-              <path
-                key={c.id}
+      {/* Country silhouettes — always rendered. Opacity + fill shift
+          dim → lit on arrival. Countries never receiving a flight
+          (Ireland, Sweden, Denmark, Iceland, Portugal, …) stay dim. */}
+      <g>
+        {countries.map((c) => {
+          const lit = litCountries.has(c.name);
+          const pulseKey = countryPulseKey.get(c.name) ?? 0;
+          return (
+            <g key={c.name}>
+              <motion.path
                 d={c.d}
-                fill="url(#country-fill)"
                 stroke="#5b6dba"
                 strokeWidth={0.7}
                 strokeLinejoin="round"
+                initial={{
+                  opacity: COUNTRY_PRE_OPACITY,
+                  fill: "url(#country-fill-dim)",
+                }}
+                animate={{
+                  opacity: lit ? 1 : COUNTRY_PRE_OPACITY,
+                  fill: lit
+                    ? "url(#country-fill-lit)"
+                    : "url(#country-fill-dim)",
+                }}
+                transition={{ duration: COUNTRY_REVEAL_MS / 1000, ease: "easeOut" }}
               />
-            ))}
-          </g>
-
-          {/* Visible violet arc trajectories — each flies in sync with
-              its mask corridor so the white fog-lift tracks the line. */}
-          <g filter="url(#neon-line-glow)">
-            {routes.map((route) => {
-              if (!revealStage.has(`corridor:${route.id}`)) return null;
-              const flightDuration = route.length / REVEAL_SPEED_PROJ_PER_SEC;
-              return (
+              {/* Arrival pulse — a ghost of the country shape glows
+                  and fades right after the plane lands. New pulseKey
+                  on each arrival remounts so the animation replays even
+                  when multiple cities share the country. */}
+              {lit && pulseKey > 0 && (
                 <motion.path
-                  key={route.id}
-                  d={route.d}
-                  stroke="#d172ff"
-                  strokeWidth={1.4}
-                  strokeLinecap="round"
-                  fill="none"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 0.9 }}
+                  key={`${c.name}-pulse-${pulseKey}`}
+                  d={c.d}
+                  fill="#d172ff"
+                  stroke="none"
+                  filter="url(#country-pulse-glow)"
+                  initial={{ opacity: 0.55 }}
+                  animate={{ opacity: 0 }}
                   transition={{
-                    pathLength: { duration: flightDuration, ease: "linear" },
-                    opacity: { duration: 0.25, ease: "easeOut" },
+                    duration: COUNTRY_PULSE_MS / 1000,
+                    ease: "easeOut",
                   }}
+                  style={{ pointerEvents: "none" }}
                 />
-              );
-            })}
-          </g>
+              )}
+            </g>
+          );
+        })}
+      </g>
 
-          {/* City dots. Prague fades in when its reveal circle does;
-              every destination pops when its arc arrives (same moment
-              its mask circle starts expanding). */}
-          {cities.map((city) => {
-            if (city.origin) {
-              if (!revealStage.has("prague")) return null;
-              return (
-                <motion.g
-                  key={city.id}
-                  className="prague-pulse"
-                  transform={`translate(${city.x} ${city.y})`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                >
-                  <circle r={16} fill="url(#prague-glow)" opacity={0.75} />
-                  <circle r={3.2} fill="#ffffff" />
-                </motion.g>
-              );
-            }
-            if (!revealStage.has(`city:${city.id}`)) return null;
-            const route = routeById.get(city.id);
-            if (!route) return null;
+      {/* Active flight arcs + persistent endpoint dots. Each arc mounts
+          on launch, draws pathLength 0 → 1 over its flight, fades to
+          opacity 0 after landing, then unmounts. Endpoint dots in the
+          same violet mount on landing and stay for the rest of the
+          session — marker that the city has been visited. */}
+      {/* Prague origin dot — 1.5× the destination radius, rendered
+          outside the neon-line-glow group so it reads as a clean solid
+          dot rather than a glowing beacon. Mounts at t=0. */}
+      {prague && pragueShown && (
+        <motion.circle
+          className="prague-pulse"
+          cx={prague.x}
+          cy={prague.y}
+          r={3.75}
+          fill="#d172ff"
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        />
+      )}
+
+      <g filter="url(#neon-line-glow)">
+        <AnimatePresence>
+          {routes.map((route) => {
+            const phase = flights.get(route.id);
+            if (!phase) return null;
+            const flightSec = route.length / REVEAL_SPEED_PROJ_PER_SEC;
+            const isFading = phase === "fading";
             return (
-              <g key={city.id} transform={`translate(${city.x} ${city.y})`}>
-                <motion.g
-                  initial={{ opacity: 0, scale: 0.3 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                >
-                  <circle r={7.5} fill="url(#city-glow)" opacity={0.7} />
-                  <circle r={2.2} fill="#fce6ff" />
-                </motion.g>
-              </g>
+              <motion.path
+                key={route.id}
+                d={route.d}
+                stroke="#d172ff"
+                strokeWidth={1.4}
+                strokeLinecap="round"
+                fill="none"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{
+                  pathLength: 1,
+                  // flying & landed both hold at 0.9; only "fading"
+                  // drives it down, slowly.
+                  opacity: isFading ? 0 : 0.9,
+                }}
+                transition={{
+                  pathLength: { duration: flightSec, ease: "linear" },
+                  opacity: isFading
+                    ? { duration: ARC_FADE_OUT_MS / 1000, ease: "easeOut" }
+                    : { duration: 0.25, ease: "easeOut" },
+                }}
+              />
             );
           })}
-        </>
-      )}
+        </AnimatePresence>
+        {cities.map((city) => {
+          if (city.origin) return null;
+          if (!landedCityIds.has(city.id)) return null;
+          return (
+            <motion.circle
+              key={`dot-${city.id}`}
+              cx={city.x}
+              cy={city.y}
+              r={2.5}
+              fill="#d172ff"
+              initial={{ opacity: 0, scale: 0.4 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            />
+          );
+        })}
+      </g>
+
     </svg>
   );
 }

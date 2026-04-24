@@ -70,7 +70,9 @@ export function Hero({ countries, cities, routes, globe, viewX, viewY, viewW, vi
           the page and the headline, left-aligned with the "Your" of the H1. */}
       <div className="absolute inset-x-0 top-[13%] z-30">
         <div className="px-6 md:px-12 lg:px-20">
-          <Logo width={280} started={started} />
+          {/* started=false intentionally — the logo is a static identity
+              marker while the map carries the whole intro animation. */}
+          <Logo width={280} started={false} />
         </div>
       </div>
 

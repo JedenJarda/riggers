@@ -119,30 +119,23 @@ export const PROJECTED_CITIES: ProjectedCity[] = CITIES.map((c) => {
 
 export const PRAGUE = PROJECTED_CITIES.find((c) => c.origin)!;
 
-// Group assignment: destinations sorted by Euclidean distance from
-// Prague (in projected space). The group count matches the six
-// letter-settle moments exported from Logo.tsx — first group lights on
-// tečka settle, last on the z-burst crescendo.
-const GROUP_SIZES = [3, 3, 3, 3, 3, 2]; // sums to 17
-
-function groupIndexFor(sortedIdx: number): number {
-  let cum = 0;
-  for (let g = 0; g < GROUP_SIZES.length; g++) {
-    cum += GROUP_SIZES[g];
-    if (sortedIdx < cum) return g;
-  }
-  return GROUP_SIZES.length - 1;
-}
-
-// Sorted once at build time (server-only module).
-const destinationsByDistance = PROJECTED_CITIES
+// Destinations in a randomised launch order. Build-time Fisher-Yates
+// shuffle keeps the sequence stable for a given build (no hydration
+// mismatch) but breaks the predictable "centre outward" cadence of a
+// distance sort — planes now leave Prague in an unrelated order.
+const destinationsShuffled = CITIES
   .filter((c) => !c.origin)
-  .slice()
-  .sort((a, b) => {
-    const dA = Math.hypot(a.x - PRAGUE.x, a.y - PRAGUE.y);
-    const dB = Math.hypot(b.x - PRAGUE.x, b.y - PRAGUE.y);
-    return dA - dB;
+  .map((c) => {
+    const projected = PROJECTED_CITIES.find((p) => p.id === c.id)!;
+    return { ...c, x: projected.x, y: projected.y };
   });
+for (let i = destinationsShuffled.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [destinationsShuffled[i], destinationsShuffled[j]] = [
+    destinationsShuffled[j],
+    destinationsShuffled[i],
+  ];
+}
 
 // Arc length approximation for a quadratic bezier — 16 polyline
 // samples are plenty for "flight time = length / speed" sizing, we
@@ -169,15 +162,17 @@ function bezierLength(
 // Quadratic bezier from Prague to a destination, bowed "up" (control
 // point above the chord midpoint by ARC_LIFT_RATIO × chord). Always
 // upward regardless of direction — gives every flight path the same
-// airline-trajectory silhouette.
+// airline-trajectory silhouette. `launchIdx` is the stagger order
+// (nearest city = 0, farthest = 16).
 export type Route = {
-  id: string;
-  d: string;
-  length: number;   // bezier arc length in PROJ units (for flight timing)
-  groupIdx: number; // 0..5, which letter-settle triggers this route
+  id: string;          // matches CITIES[].id
+  country: string;     // country the plane is landing in (for reveal)
+  d: string;           // SVG path for the bezier arc
+  length: number;      // bezier arc length in PROJ units (flight time = length / speed)
+  launchIdx: number;   // 0..N−1, position in the staggered launch order
 };
 
-export const ROUTES: Route[] = destinationsByDistance.map((c, idx) => {
+export const ROUTES: Route[] = destinationsShuffled.map((c, idx) => {
   const ax = PRAGUE.x;
   const ay = PRAGUE.y;
   const bx = c.x;
@@ -190,9 +185,10 @@ export const ROUTES: Route[] = destinationsByDistance.map((c, idx) => {
   const length = bezierLength(ax, ay, mx, cpy, bx, by);
   return {
     id: c.id,
+    country: c.country,
     d,
     length,
-    groupIdx: groupIndexFor(idx),
+    launchIdx: idx,
   };
 });
 

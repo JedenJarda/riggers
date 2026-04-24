@@ -1,22 +1,25 @@
 /**
  * Central reveal-choreography constants shared by the server-side
  * geometry module (europe-geo.ts) and the client EuropeMap component.
- * Kept out of europe-geo.ts because that module is marked server-only;
- * this file carries no side effects so either side can import it.
+ * Kept out of europe-geo.ts because that module is server-only; this
+ * file has no side effects so either side can import it.
  *
- * Units are SVG user units (viewBox space) unless noted. Slice scale
- * at a 1440×900 viewport ≈ 1.667, so 10 vbox units ≈ 16.67 CSS pixels.
+ * Map animation — ~6 s total:
+ *   0              → Prague glow dot + Czechia lights up
+ *   INITIAL_DELAY  → 1st plane leaves Prague (nearest city)
+ *   +STAGGER       → next plane; 17 planes total spaced by STAGGER
+ *   flight time     = bezier arc length / SPEED   (variable per plane)
+ *   on arrival      → the country containing that city lights up (or
+ *                     pulses if already lit), arc fades out over
+ *                     ARC_FADE_OUT_MS then unmounts.
  */
 
-export const REVEAL_RADIUS_PRAGUE = 15;         // fog lift around Prague
-export const REVEAL_CORRIDOR_WIDTH = 30;        // fog-lift band traced by a flying arc
-export const REVEAL_RADIUS_CITY = 50;           // fog lift around a destination city
-export const REVEAL_EDGE_SOFTNESS = 0.2;        // radial gradient fade band (last 20%)
-export const REVEAL_EXPAND_MS = 400;            // circle-expand duration (Prague + cities)
-// Arc speed tuned so the shortest flight (≈200 PROJ units from Prague
-// to Berlin/Wien) takes ~1 s, and the longest (Madrid, Oslo ≈ 800–900
-// units) runs a couple seconds. Group settles are 200–1100 ms apart, so
-// flights overlap: a later-launching plane takes off while an earlier
-// one is still mid-air.
-export const REVEAL_SPEED_PROJ_PER_SEC = 200;
-export const ARC_LIFT_RATIO = 0.2;              // bezier control point lift = 20% of chord
+export const INITIAL_DELAY_MS = 400;        // wait after mount before 1st plane
+export const STAGGER_MS = 180;              // gap between consecutive plane launches
+export const REVEAL_SPEED_PROJ_PER_SEC = 117; // plane speed in SVG user units (slow — ~3× slower than pure sprint)
+export const COUNTRY_REVEAL_MS = 400;       // dim → full opacity on arrival
+export const COUNTRY_PULSE_MS = 500;        // post-reveal glow pulse duration
+export const ARC_HOLD_MS = 2000;            // arc stays fully visible after landing
+export const ARC_FADE_OUT_MS = 1500;        // then fades slowly to nothing
+export const COUNTRY_PRE_OPACITY = 0.15;    // visibility of dim (pre-reveal) countries
+export const ARC_LIFT_RATIO = 0.2;          // bezier control point lift = 20% of chord
