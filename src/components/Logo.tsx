@@ -50,6 +50,27 @@ function scaleTime(tBase: number): number {
 export const LOGO_DURATION = scaleTime(BASE_DURATION);      // 4.4215s
 const FULL_SETTLE = scaleTime(BASE_SETTLE);                 // 4.2945s
 
+// Timestamps consumed by the map's reveal choreography (EuropeMap.tsx).
+// These expose logo milestones so the fog-of-war mask and route flights
+// can be scheduled relative to the flicker — exports are READ-ONLY data
+// derived from the (locked) flicker timeline, never a new animation.
+//
+// Prague lights up at the very first click (peak 0.46s base — every
+// letter flashes together).
+export const LOGO_PRAGUE_TRIGGER = 0.46 * SLOW;  // ~0.598s real
+
+// Six letter-settle moments, in the order a viewer perceives them:
+//   tečka → gg/c → er → s → ri → z burst.
+// Each drives one group of route-lines launching from Prague.
+export const LOGO_LETTER_SETTLES_REAL: readonly number[] = [
+  1.13 * SLOW,                     // tečka full settle (~1.469s)
+  scaleTime(2.005),                // gg + c partial settle (~2.6065s)
+  scaleTime(2.75),                 // er partial settle (~2.865s)
+  scaleTime(3.41),                 // s partial settle (~3.085s)
+  scaleTime(3.74),                 // ri partial settle (~3.295s)
+  scaleTime(BASE_SETTLE),          // z full burst (~3.415s)
+];
+
 // One brief "flash" event: [t, peak] becomes a click-on/click-off pair
 // — explicit zero immediately before t and ~50ms after, so motion's
 // linear interpolation between keyframes can't create a slow ramp.

@@ -1,9 +1,10 @@
 import "server-only";
 import { feature } from "topojson-client";
-import { geoOrthographic, geoPath, geoInterpolate } from "d3-geo";
+import { geoOrthographic, geoPath } from "d3-geo";
 import type { Feature, FeatureCollection } from "geojson";
 import topo from "world-atlas/countries-50m.json";
 import { CITIES } from "./cities";
+import { ARC_LIFT_RATIO } from "./reveal-config";
 
 /**
  * European countries to render. Names match the world-atlas v2 dataset
@@ -118,23 +119,82 @@ export const PROJECTED_CITIES: ProjectedCity[] = CITIES.map((c) => {
 
 export const PRAGUE = PROJECTED_CITIES.find((c) => c.origin)!;
 
-// Geodesic routes from Prague — sampled along the great-circle, projected,
-// joined as polyline. Real flight-path arcs that bend with the globe's
-// curvature (vs naive 2D bezier curves on a flat map).
-export type Route = { id: string; d: string };
+// Group assignment: destinations sorted by Euclidean distance from
+// Prague (in projected space). The group count matches the six
+// letter-settle moments exported from Logo.tsx — first group lights on
+// tečka settle, last on the z-burst crescendo.
+const GROUP_SIZES = [3, 3, 3, 3, 3, 2]; // sums to 17
 
-export const ROUTES: Route[] = CITIES
+function groupIndexFor(sortedIdx: number): number {
+  let cum = 0;
+  for (let g = 0; g < GROUP_SIZES.length; g++) {
+    cum += GROUP_SIZES[g];
+    if (sortedIdx < cum) return g;
+  }
+  return GROUP_SIZES.length - 1;
+}
+
+// Sorted once at build time (server-only module).
+const destinationsByDistance = PROJECTED_CITIES
   .filter((c) => !c.origin)
-  .map((c) => {
-    const interp = geoInterpolate([PRAGUE_LON, PRAGUE_LAT], [c.lng, c.lat]);
-    const pts: string[] = [];
-    for (let i = 0; i <= 48; i++) {
-      const xy = projection(interp(i / 48));
-      if (xy) pts.push(`${xy[0]} ${xy[1]}`);
-    }
-    return { id: c.id, d: pts.length ? `M ${pts.join(" L ")}` : "" };
-  })
-  .filter((r) => r.d !== "");
+  .slice()
+  .sort((a, b) => {
+    const dA = Math.hypot(a.x - PRAGUE.x, a.y - PRAGUE.y);
+    const dB = Math.hypot(b.x - PRAGUE.x, b.y - PRAGUE.y);
+    return dA - dB;
+  });
+
+// Arc length approximation for a quadratic bezier — 16 polyline
+// samples are plenty for "flight time = length / speed" sizing, we
+// don't need pixel-perfect length.
+function bezierLength(
+  ax: number, ay: number,
+  cx: number, cy: number,
+  bx: number, by: number,
+  samples = 16,
+): number {
+  let len = 0;
+  let px = ax, py = ay;
+  for (let i = 1; i <= samples; i++) {
+    const t = i / samples;
+    const mt = 1 - t;
+    const x = mt * mt * ax + 2 * mt * t * cx + t * t * bx;
+    const y = mt * mt * ay + 2 * mt * t * cy + t * t * by;
+    len += Math.hypot(x - px, y - py);
+    px = x; py = y;
+  }
+  return len;
+}
+
+// Quadratic bezier from Prague to a destination, bowed "up" (control
+// point above the chord midpoint by ARC_LIFT_RATIO × chord). Always
+// upward regardless of direction — gives every flight path the same
+// airline-trajectory silhouette.
+export type Route = {
+  id: string;
+  d: string;
+  length: number;   // bezier arc length in PROJ units (for flight timing)
+  groupIdx: number; // 0..5, which letter-settle triggers this route
+};
+
+export const ROUTES: Route[] = destinationsByDistance.map((c, idx) => {
+  const ax = PRAGUE.x;
+  const ay = PRAGUE.y;
+  const bx = c.x;
+  const by = c.y;
+  const chord = Math.hypot(bx - ax, by - ay);
+  const mx = (ax + bx) / 2;
+  const my = (ay + by) / 2;
+  const cpy = my - chord * ARC_LIFT_RATIO; // lift control point upward
+  const d = `M ${ax.toFixed(2)} ${ay.toFixed(2)} Q ${mx.toFixed(2)} ${cpy.toFixed(2)} ${bx.toFixed(2)} ${by.toFixed(2)}`;
+  const length = bezierLength(ax, ay, mx, cpy, bx, by);
+  return {
+    id: c.id,
+    d,
+    length,
+    groupIdx: groupIndexFor(idx),
+  };
+});
 
 // Globe metadata for rendering the sphere (ocean, atmospheric halo, limb).
 export type GlobeShape = { cx: number; cy: number; r: number };
