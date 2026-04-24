@@ -103,4 +103,19 @@
     transform-origin: center;
             transform-box: fill-box;
   }
+
+  /* Neon-tube running border on crew cards.
+     Uses @property so the conic-gradient angle can be animated —
+     without it the custom property is treated as a raw string and
+     won't tween. Safari 16.4+, Chrome 85+, Firefox 128+. */
+  @property --border-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+  @keyframes crew-border-spin {
+    to {
+      --border-angle: 360deg;
+    }
+  }
 }

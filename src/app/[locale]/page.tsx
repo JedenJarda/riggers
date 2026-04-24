@@ -6,6 +6,7 @@ import { Hero } from "@/components/Hero";
 import { WhoWeAre } from "@/components/WhoWeAre";
 import { WhatWeDo } from "@/components/WhatWeDo";
 import { Work } from "@/components/Work";
+import { Crew } from "@/components/Crew";
 import {
   COUNTRIES,
   PROJECTED_CITIES,
@@ -43,6 +44,7 @@ export default async function Home({
       <WhoWeAre />
       <WhatWeDo />
       <Work />
+      <Crew />
     </main>
   );
 }
