@@ -7,6 +7,7 @@ import { WhoWeAre } from "@/components/WhoWeAre";
 import { WhatWeDo } from "@/components/WhatWeDo";
 import { Work } from "@/components/Work";
 import { Crew } from "@/components/Crew";
+import { BookUs } from "@/components/BookUs";
 import {
   COUNTRIES,
   PROJECTED_CITIES,
@@ -45,6 +46,7 @@ export default async function Home({
       <WhatWeDo />
       <Work />
       <Crew />
+      <BookUs />
     </main>
   );
 }
