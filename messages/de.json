@@ -10,6 +10,140 @@
     "tagline": "17 VENUES · IN GANZ EU · EIN TEAM",
     "scroll": "Scrollen"
   },
+  "About": {
+    "eyebrow": "WER WIR SIND",
+    "p1": "Wir sind ein Kollektiv freiberuflicher Rigger aus der Tschechischen Republik, die in ganz Europa als lokale Erweiterung eures Teams arbeiten. Wenn euer Local-Crew ein paar Hände mehr braucht — oder sechs — sind wir die, die ankommen, die Venue kennen, Gear dabei haben und eure Sprache sprechen.",
+    "p2": "Wir sind Freelancer, keine Agentur. Euer Budget geht an die Leute, die die Show aufhängen — deshalb können wir uns die Zertifizierungen leisten, die wir haben, das Gear, das wir mitbringen, und die zehn plus Jahre Tour-Erfahrung hinter jedem von uns.",
+    "p3": "Bucht uns als eure Local Rigger. Wo auch immer in Europa das gerade ist."
+  },
+  "Services": {
+    "eyebrow": "WAS WIR MACHEN",
+    "heading": "Die Arbeit.",
+    "items": {
+      "rigging": {
+        "title": "Rigging",
+        "description": "Up, Ground, Head. Volle Rigging-Crews für Arena-Scale-Produktionen."
+      },
+      "climbing": {
+        "title": "Climbing",
+        "description": "IRATA-zertifizierter Rope Access für Stellen, die sonst niemand erreicht."
+      },
+      "groundSupport": {
+        "title": "Ground Support",
+        "description": "Layout, Ballast, Truss-Aufbau. Die Teile, die alles andere tragen."
+      },
+      "plots": {
+        "title": "Rigging Plots & Design",
+        "description": "Lastberechnungen und Rigging Plots bevor der erste Motor hochgeht."
+      },
+      "consultations": {
+        "title": "Venue-Beratung",
+        "description": "Walkthroughs, Rigging Surveys, Limit Letters. Klare Antworten von Leuten, die da oben waren."
+      },
+      "stage": {
+        "title": "Stage Design",
+        "description": "Stage Design von Jarda — technische Produktion mit einem Jahrzehnt auf beiden Seiten des Trusses."
+      }
+    }
+  },
+  "Work": {
+    "eyebrow": "WO WIR GEARBEITET HABEN",
+    "venuesHeading": "Venues.",
+    "venuesCaption": "Die Chancen stehen gut, dass wir eine Show in einer Venue gehängt haben, die ihr regelmäßig bucht. Die, die wir nicht kennen, lernen wir schnell — nach ein paar hundert Hallen überrascht uns nicht mehr viel.",
+    "toursHeading": "Touren & Produktionen.",
+    "toursIntro": "Wie jeder gute Rigger haben wir für {artists} gearbeitet — wir haben über die Jahre so viele Tour-Shirts gesammelt, dass wir nichts anderes mehr kaufen.",
+    "highlightsLabel": "Highlights",
+    "highlights": {
+      "esc": "Eurovision Song Contest (mehrere Ausgaben)",
+      "cirque": "Cirque du Soleil — Saudi-Arabien",
+      "laver": "Laver Cup — technische Produktion & 3D-Modeling, O2 Arena Prag (Auftakt-Ausgabe)"
+    }
+  },
+  "Crew": {
+    "eyebrow": "LERNT DAS TEAM KENNEN",
+    "heading": "Die Leute, die die Show hängen.",
+    "subhead": "Ein Team, das sich kennt — kein Roster aus Fremden, die auf den letzten Drücker gebucht werden.",
+    "photoComing": "Foto kommt bald",
+    "bioComing": "Profil kommt bald. Jarda füllt die Details vor dem Go-Live.",
+    "roles": {
+      "founder": "Founder & Head Rigger",
+      "upRigger": "Up Rigger",
+      "groundRigger": "Ground Rigger"
+    },
+    "members": {
+      "jarda": {
+        "name": "Jarda",
+        "role": "Founder & Head Rigger",
+        "shortBio": "Zürich-basiert. Lebt in den tschechischen Bergen, wenn er zu Hause ist.",
+        "longBio": "Sechs Jahre in der technischen Produktion — Festivals, Konzerte, Sportevents — bevor er entschied, dass er lieber oben auf einem Truss ist als um 2 Uhr morgens hinter einem Laptop. Schläft jetzt sowieso nicht.",
+        "projects": "Technische Produktion und 3D-Modeling für die Auftakt-Ausgabe des Laver Cup in der O2 Arena Prag, Eurovision Song Contest 2025, plus eine stabile Residency in Schweizer und deutschen Venues.",
+        "tags": "IRATA L3 · IPAF · A1 · EN fluent · DE — lernt"
+      },
+      "ales": {
+        "name": "Aleš",
+        "role": "Up Rigger",
+        "shortBio": "In Tschechien basiert. Profil kommt bald.",
+        "longBio": "Profil kommt bald — Jarda füllt Story, Venues und persönliche Details vor dem Go-Live.",
+        "projects": "Notable Projekte kommen bald.",
+        "tags": "IRATA · IPAF · A1 · EN · DE — im Lernprozess"
+      },
+      "filip": {
+        "name": "Filip",
+        "role": "Ground Rigger",
+        "shortBio": "In Tschechien basiert. Profil kommt bald.",
+        "longBio": "Profil kommt bald — Jarda füllt Story, Venues und persönliche Details vor dem Go-Live.",
+        "projects": "Notable Projekte kommen bald.",
+        "tags": "IRATA · IPAF · A1 · EN · DE — im Lernprozess"
+      }
+    },
+    "close": "Schließen"
+  },
+  "Book": {
+    "eyebrow": "BUCHT UNS",
+    "heading": "Markiert die Tage.",
+    "subhead": "Wir melden uns, sobald wir vom Dach runter sind.",
+    "calendarLegend": "Tage anklicken zum Auswählen — auf dem Handy über die Woche wischen.",
+    "selectedLabel": "Ausgewählte Tage",
+    "form": {
+      "venue": "Stadt / Venue",
+      "eventType": "Event-Typ",
+      "eventTypePlaceholder": "z. B. Arena Show, 80k lbs Rigging",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "phoneHint": "optional",
+      "note": "Notiz",
+      "notePlaceholder": "Gibt's sonst etwas, das wir über die Show wissen sollten?",
+      "submit": "Abschicken",
+      "submitting": "Wird gesendet…",
+      "success": "Danke — wir melden uns.",
+      "error": "Irgendwas ist kaputt. Schreibt uns lieber direkt.",
+      "required": "Pflichtfeld",
+      "invalidEmail": "Ungültige E-Mail"
+    },
+    "alternative": "Oder schreibt uns: {email} · Ruft an: {phone}"
+  },
+  "Faq": {
+    "openLabel": "FAQ",
+    "heading": "Häufig gefragt.",
+    "items": [
+      { "q": "Reist ihr mit eigenem Gear?", "a": "Ja — persönliche Gurte, Helme, Werkzeug, PSA. Für großes Gear (Motoren, Bridles) gehen wir davon aus, dass die Venue / Host-Firma es stellt." },
+      { "q": "Wie sieht eure Verfügbarkeit aus?", "a": "Wir sind meistens unterwegs, versuchen aber, unseren Kalender öffentlich zu halten. Nutzt den Buchungskalender unten, markiert die Tage, an denen ihr uns braucht, und wir antworten so schnell wie möglich — meistens noch am selben Tag." },
+      { "q": "Versicherung?", "a": "Wir alle haben Krankenversicherung, Haftpflicht (Deckung in Millionenhöhe) und professionelle Arbeitsversicherung. Nachweise auf Anfrage." },
+      { "q": "Gewerbescheine?", "a": "Wir alle operieren als lizenzierte Gewerbetreibende in der Tschechischen Republik (živnostenský list)." },
+      { "q": "Seid ihr EU-basiert? A1-Formulare?", "a": "Alle tschechische Staatsbürger, alle EU-basiert, alle mit gültigen A1-Formularen für grenzüberschreitende Arbeit." },
+      { "q": "Wie reist ihr?", "a": "Mit Auto, Flugzeug oder Schiff — je nachdem, womit wir pünktlich ankommen." },
+      { "q": "Sprachen?", "a": "Englisch durchgängig. Deutsch — im Lernprozess (manche von uns schneller als andere)." },
+      { "q": "Wo seid ihr basiert?", "a": "Tschechische Republik ist Zuhause. Manche von uns sind im Ausland basiert (Schweiz, Deutschland), je nach aktueller Tour." }
+    ],
+    "close": "Schließen"
+  },
+  "Footer": {
+    "tagline": "Eure Local Rigger, wo auch immer in Europa das gerade ist.",
+    "contactLabel": "Kontakt",
+    "certsLabel": "Zertifiziert",
+    "copyright": "© {year} riggers.cz · Alle Rechte vorbehalten.",
+    "faqButton": "FAQ"
+  },
   "Nav": {
     "language": "Sprache"
   }

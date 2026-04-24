@@ -3,6 +3,9 @@ import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { Hero } from "@/components/Hero";
+import { WhoWeAre } from "@/components/WhoWeAre";
+import { WhatWeDo } from "@/components/WhatWeDo";
+import { Work } from "@/components/Work";
 import {
   COUNTRIES,
   PROJECTED_CITIES,
@@ -37,6 +40,9 @@ export default async function Home({
         viewW={VIEW_W}
         viewH={VIEW_H}
       />
+      <WhoWeAre />
+      <WhatWeDo />
+      <Work />
     </main>
   );
 }

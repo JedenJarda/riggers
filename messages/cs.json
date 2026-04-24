@@ -10,6 +10,140 @@
     "tagline": "17 MÍST · PO CELÉ EU · JEDEN TÝM",
     "scroll": "Scroll"
   },
+  "About": {
+    "eyebrow": "KDO JSME",
+    "p1": "Jsme kolektiv freelance riggerů se sídlem v České republice, kteří pracují po celé Evropě jako lokální rozšíření vašeho týmu. Když váš místní štáb potřebuje pár rukou navíc — nebo šest — jsme ti, kdo dorazí, zná halu, má s sebou výbavu a mluví vaším jazykem.",
+    "p2": "Jsme freelanceři, ne agentura. Váš rozpočet jde lidem, kteří věší show — proto si můžeme dovolit certifikace, výbavu i deset a více let turné za každým z nás.",
+    "p3": "Zarezervujte si nás jako svoje lokální riggery. Ať už kdekoli v Evropě."
+  },
+  "Services": {
+    "eyebrow": "CO DĚLÁME",
+    "heading": "Naše práce.",
+    "items": {
+      "rigging": {
+        "title": "Rigging",
+        "description": "Up, ground, head. Kompletní rigging štáb pro arénové produkce."
+      },
+      "climbing": {
+        "title": "Climbing",
+        "description": "IRATA certifikovaný rope access pro místa, kam se nikdo jiný nedostane."
+      },
+      "groundSupport": {
+        "title": "Ground support",
+        "description": "Layout, ballast, stavba trussů. Základ, na kterém stojí zbytek."
+      },
+      "plots": {
+        "title": "Rigging ploty & návrhy",
+        "description": "Load calcs a rigging ploty dřív, než se první motor dostane nahoru."
+      },
+      "consultations": {
+        "title": "Konzultace venue",
+        "description": "Obhlídky, rigging survey, limit letters. Přímé odpovědi od lidí, co tam nahoře byli."
+      },
+      "stage": {
+        "title": "Stage design",
+        "description": "Stage design od Jardy — technická produkce s dekádou na obou stranách trussu."
+      }
+    }
+  },
+  "Work": {
+    "eyebrow": "KDE JSME PRACOVALI",
+    "venuesHeading": "Haly.",
+    "venuesCaption": "Je dost pravděpodobné, že jsme věšeli show v hale, kterou si bookujete pravidelně. Ty, které neznáme, si přečteme rychle — po pár stovkách hal už nás moc nepřekvapí.",
+    "toursHeading": "Turné & produkce.",
+    "toursIntro": "Jako každý dobrý rigger jsme pracovali pro {artists} — nasbírali jsme tolik tour triček, že jsme už nic jiného nekupujeme.",
+    "highlightsLabel": "Highlights",
+    "highlights": {
+      "esc": "Eurovision Song Contest (několik ročníků)",
+      "cirque": "Cirque du Soleil — Saúdská Arábie",
+      "laver": "Laver Cup — technická produkce & 3D modelování, O2 Arena Praha (první ročník)"
+    }
+  },
+  "Crew": {
+    "eyebrow": "POZNEJTE TÝM",
+    "heading": "Lidé, co věší show.",
+    "subhead": "Jeden tým, který se zná — ne roster cizích lidí bookovaných na poslední chvíli.",
+    "photoComing": "Fotka brzy",
+    "bioComing": "Profil brzy. Jarda doplní detaily před go-live.",
+    "roles": {
+      "founder": "Zakladatel & Head Rigger",
+      "upRigger": "Up Rigger",
+      "groundRigger": "Ground Rigger"
+    },
+    "members": {
+      "jarda": {
+        "name": "Jarda",
+        "role": "Zakladatel & Head Rigger",
+        "shortBio": "Žije v Curychu, v Česku v horách.",
+        "longBio": "Šest let v technické produkci — festivaly, koncerty, sportovní eventy — než se rozhodl, že radši bude nahoře na trussu než u laptopu ve 2 ráno. Teď nespí tak jako tak.",
+        "projects": "Technická produkce a 3D modelování pro první ročník Laver Cupu v O2 Areně Praha, Eurovision Song Contest 2025, plus pravidelný residency po švýcarských a německých halách.",
+        "tags": "IRATA L3 · IPAF · A1 · EN fluent · DE — učí se"
+      },
+      "ales": {
+        "name": "Aleš",
+        "role": "Up Rigger",
+        "shortBio": "Sídlí v ČR. Profil brzy.",
+        "longBio": "Profil brzy — Jarda doplní příběh, zajímavé haly a osobní detaily před go-live.",
+        "projects": "Notable projekty brzy.",
+        "tags": "IRATA · IPAF · A1 · EN · DE — učí se"
+      },
+      "filip": {
+        "name": "Filip",
+        "role": "Ground Rigger",
+        "shortBio": "Sídlí v ČR. Profil brzy.",
+        "longBio": "Profil brzy — Jarda doplní příběh, zajímavé haly a osobní detaily před go-live.",
+        "projects": "Notable projekty brzy.",
+        "tags": "IRATA · IPAF · A1 · EN · DE — učí se"
+      }
+    },
+    "close": "Zavřít"
+  },
+  "Book": {
+    "eyebrow": "REZERVACE",
+    "heading": "Označte termíny.",
+    "subhead": "Ozveme se, jakmile slezeme ze střechy.",
+    "calendarLegend": "Klikněte na dny pro výběr — na mobilu přejeďte prstem přes týden.",
+    "selectedLabel": "Vybrané termíny",
+    "form": {
+      "venue": "Město / Hala",
+      "eventType": "Typ akce",
+      "eventTypePlaceholder": "např. Arena show, 80k lbs rigging",
+      "email": "Email",
+      "phone": "Telefon",
+      "phoneHint": "volitelné",
+      "note": "Poznámka",
+      "notePlaceholder": "Co dalšího bychom měli o show vědět?",
+      "submit": "Odeslat",
+      "submitting": "Odesíláme…",
+      "success": "Díky — brzy se ozveme.",
+      "error": "Něco se rozbilo. Napište nám radši emailem.",
+      "required": "Povinné",
+      "invalidEmail": "Neplatný email"
+    },
+    "alternative": "Nebo nám napište: {email} · Zavolejte: {phone}"
+  },
+  "Faq": {
+    "openLabel": "FAQ",
+    "heading": "Časté dotazy.",
+    "items": [
+      { "q": "Cestujete s vlastní výbavou?", "a": "Ano — osobní úvazky, helmy, nářadí, OOP. Velkou výbavu (motory, bridles) předpokládáme od haly / hostitelské firmy." },
+      { "q": "Jaká je vaše dostupnost?", "a": "Většinou jsme na cestách, ale snažíme se kalendář držet veřejný. Použijte rezervační kalendář níže a vyberte dny, kdy nás potřebujete — odpovíme co nejrychleji, obvykle ten samý den." },
+      { "q": "Pojištění?", "a": "Každý z nás má zdravotní pojištění, pojištění odpovědnosti (krytí v milionech) a profesní pojištění. Doklady na vyžádání." },
+      { "q": "Živnostenské oprávnění?", "a": "Každý z nás má platný živnostenský list v České republice." },
+      { "q": "Jste EU-based? A1 formuláře?", "a": "Všichni jsme občané ČR, všichni EU-based, všichni máme platné A1 formuláře pro přeshraniční práci." },
+      { "q": "Jak cestujete?", "a": "Autem, letadlem nebo lodí — čímkoliv, co nás tam dostane včas." },
+      { "q": "Jazyky?", "a": "Angličtinou domluva napříč. Němčina — učíme se (někteří rychleji než jiní)." },
+      { "q": "Kde sídlíte?", "a": "Česká republika je domovská. Někteří z nás sídlí v zahraničí (Švýcarsko, Německo) podle aktuálních turné." }
+    ],
+    "close": "Zavřít"
+  },
+  "Footer": {
+    "tagline": "Vaši lokální riggeři, ať už kdekoli v Evropě.",
+    "contactLabel": "Kontakt",
+    "certsLabel": "Certifikáty",
+    "copyright": "© {year} riggers.cz · Všechna práva vyhrazena.",
+    "faqButton": "FAQ"
+  },
   "Nav": {
     "language": "Jazyk"
   }

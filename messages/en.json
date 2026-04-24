@@ -10,6 +10,140 @@
     "tagline": "17 VENUES · ACROSS EU · ONE CREW",
     "scroll": "Scroll"
   },
+  "About": {
+    "eyebrow": "WHO WE ARE",
+    "p1": "We're a collective of freelance riggers based in the Czech Republic, working across Europe as a local extension of your team. When your local crew needs an extra pair of hands — or six — we're the ones who show up knowing the venue, carrying the gear, and speaking your language.",
+    "p2": "We're freelancers, not an agency. Your budget goes to the people hanging the show — which is why we can afford the certifications we carry, the gear we bring, and the decade-plus of tours behind each of us.",
+    "p3": "Book us as your local riggers. Wherever in Europe that happens to be."
+  },
+  "Services": {
+    "eyebrow": "WHAT WE DO",
+    "heading": "The work.",
+    "items": {
+      "rigging": {
+        "title": "Rigging",
+        "description": "Up, ground, head. Full arena-scale rigging crews."
+      },
+      "climbing": {
+        "title": "Climbing",
+        "description": "IRATA-certified rope access for the spots nobody else reaches."
+      },
+      "groundSupport": {
+        "title": "Ground support",
+        "description": "Layout, ballast, truss build. The parts that carry everything else."
+      },
+      "plots": {
+        "title": "Rigging plots & design",
+        "description": "Load calcs and rigging plots before the first motor goes up."
+      },
+      "consultations": {
+        "title": "Venue consultations",
+        "description": "Walkthroughs, rigging surveys, limit letters. Straight answers from people who've been up there."
+      },
+      "stage": {
+        "title": "Stage design",
+        "description": "Stage design by Jarda — technical production with a decade on both sides of the truss."
+      }
+    }
+  },
+  "Work": {
+    "eyebrow": "WHERE WE'VE WORKED",
+    "venuesHeading": "Venues.",
+    "venuesCaption": "Odds are we've hung a show in a venue you book regularly. The ones we haven't, we pick up fast — after a few hundred halls, not much surprises us anymore.",
+    "toursHeading": "Tours & productions.",
+    "toursIntro": "Like every good rigger, we've worked for {artists} — we've collected so many tour shirts over the years that we've stopped buying anything else.",
+    "highlightsLabel": "Highlights",
+    "highlights": {
+      "esc": "Eurovision Song Contest (several editions)",
+      "cirque": "Cirque du Soleil — Saudi Arabia",
+      "laver": "Laver Cup — technical production & 3D modeling, O2 Arena Prague (inaugural edition)"
+    }
+  },
+  "Crew": {
+    "eyebrow": "MEET THE CREW",
+    "heading": "The people hanging the show.",
+    "subhead": "One crew, known to each other — not a roster of strangers booked last minute.",
+    "photoComing": "Photo coming soon",
+    "bioComing": "Profile coming soon. Jarda will fill in the details before go-live.",
+    "roles": {
+      "founder": "Founder & Head Rigger",
+      "upRigger": "Up Rigger",
+      "groundRigger": "Ground Rigger"
+    },
+    "members": {
+      "jarda": {
+        "name": "Jarda",
+        "role": "Founder & Head Rigger",
+        "shortBio": "Zürich-based. Lives in the Czech mountains when he's home.",
+        "longBio": "Six years in technical production — festivals, concerts, sports events — before deciding he'd rather be up on a truss than behind a laptop at 2 a.m. Now doesn't sleep either way.",
+        "projects": "Technical production and 3D modeling for the inaugural Laver Cup at O2 Arena Prague, Eurovision Song Contest 2025, plus a steady residency across Swiss and German venues.",
+        "tags": "IRATA L3 · IPAF · A1 · EN fluent · DE — learning in progress"
+      },
+      "ales": {
+        "name": "Aleš",
+        "role": "Up Rigger",
+        "shortBio": "Based in Czechia. Profile coming soon.",
+        "longBio": "Profile coming soon — Jarda will fill in story, notable venues, and the personal details before go-live.",
+        "projects": "Notable projects coming soon.",
+        "tags": "IRATA · IPAF · A1 · EN · DE — in progress"
+      },
+      "filip": {
+        "name": "Filip",
+        "role": "Ground Rigger",
+        "shortBio": "Based in Czechia. Profile coming soon.",
+        "longBio": "Profile coming soon — Jarda will fill in story, notable venues, and the personal details before go-live.",
+        "projects": "Notable projects coming soon.",
+        "tags": "IRATA · IPAF · A1 · EN · DE — in progress"
+      }
+    },
+    "close": "Close"
+  },
+  "Book": {
+    "eyebrow": "BOOK US",
+    "heading": "Mark the dates.",
+    "subhead": "We'll get back to you as soon as we're off the roof.",
+    "calendarLegend": "Click days to select — drag across weekdays on mobile.",
+    "selectedLabel": "Selected dates",
+    "form": {
+      "venue": "City / Venue",
+      "eventType": "Event type",
+      "eventTypePlaceholder": "e.g. Arena show, 80k lbs rigging",
+      "email": "Email",
+      "phone": "Phone",
+      "phoneHint": "optional",
+      "note": "Note",
+      "notePlaceholder": "Anything else we should know about the show?",
+      "submit": "Send it over",
+      "submitting": "Sending…",
+      "success": "Thanks — we'll be in touch.",
+      "error": "Something broke. Try emailing us directly.",
+      "required": "Required",
+      "invalidEmail": "Looks like an invalid email"
+    },
+    "alternative": "Or just email us: {email} · Call: {phone}"
+  },
+  "Faq": {
+    "openLabel": "FAQ",
+    "heading": "Frequently asked.",
+    "items": [
+      { "q": "Do you travel with your own gear?", "a": "Yes — personal harnesses, helmets, tools, PPE. For large gear (motors, bridles), we assume the venue / host company provides." },
+      { "q": "What's your availability?", "a": "We're usually on the road, but we try to keep our calendar public. Use the booking calendar below to mark the dates you'd need us and we'll reply as fast as we can — usually the same day." },
+      { "q": "Insurance coverage?", "a": "All of us carry health insurance, liability insurance (coverage in millions), and professional work insurance. Paperwork available on request." },
+      { "q": "Business licenses?", "a": "All of us operate as licensed businesses in the Czech Republic (živnostenský list)." },
+      { "q": "Are you EU-based? A1 forms?", "a": "All Czech Republic nationals, all EU-based, all holding valid A1 forms for cross-border work." },
+      { "q": "How do you travel?", "a": "By car, plane, or boat — whichever gets us there on time." },
+      { "q": "Languages?", "a": "English across the board. German — learning in progress (some of us faster than others)." },
+      { "q": "Where are you based?", "a": "Czech Republic is home. Some of us are based abroad (Switzerland, Germany) depending on current tours." }
+    ],
+    "close": "Close"
+  },
+  "Footer": {
+    "tagline": "Your local riggers, wherever in Europe that happens to be.",
+    "contactLabel": "Contact",
+    "certsLabel": "Certified",
+    "copyright": "© {year} riggers.cz · All rights reserved.",
+    "faqButton": "FAQ"
+  },
   "Nav": {
     "language": "Language"
   }
