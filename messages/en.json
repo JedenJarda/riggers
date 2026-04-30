@@ -1,6 +1,6 @@
 {
   "Hero": {
-    "eyebrow": "CZ · BASED · EU · TOURING",
+    "eyebrow": "CZECH CREW · EUROPEAN REACH",
     "headlineMain": "Your Local Riggers",
     "headlineAccent": "across Europe.",
     "subhead": "When local isn't enough, call your friends. A collective of freelance riggers, arriving in your venue knowing the motors, the bridles, and the shortcut backstage.",
@@ -12,9 +12,11 @@
   },
   "About": {
     "eyebrow": "WHO WE ARE",
-    "p1": "We're a collective of freelance riggers based in the Czech Republic, working across Europe as a local extension of your team. When your local crew needs an extra pair of hands — or six — we're the ones who show up knowing the venue, carrying the gear, and speaking your language.",
-    "p2": "We're freelancers, not an agency. Your budget goes to the people hanging the show — which is why we can afford the certifications we carry, the gear we bring, and the decade-plus of tours behind each of us.",
-    "p3": "Book us as your local riggers. Wherever in Europe that happens to be."
+    "p1": "We're a Czech collective of freelance riggers working across Europe — ground, up, head. Hundreds of shows, dozens of arenas, over a decade each.",
+    "p2": "When your crew's booked on two shows the same weekend, or when the tour rolling into your venue needs more hands than you've got, that's where we come in. One rigger. Six. Whatever the call sheet says.",
+    "p3": "IRATA, IPAF, A1 forms, full liability and workers' comp across the EU. All of us, all current.",
+    "p4": "No agency margin, no middle layer. You hire freelancers directly, which is why we can keep the certifications current, the gear dialed, and the crew we run with the kind you'd actually want on rope next to you.",
+    "p5": "Book us as your local riggers. Wherever in Europe that happens to be."
   },
   "Services": {
     "eyebrow": "WHAT WE DO",
@@ -22,7 +24,7 @@
     "items": {
       "rigging": {
         "title": "Rigging",
-        "description": "Up, ground, head. Full arena-scale rigging crews."
+        "description": "Up, ground, head. The positions you need filled when the show's bigger than your roster."
       },
       "climbing": {
         "title": "Climbing",
@@ -30,19 +32,27 @@
       },
       "groundSupport": {
         "title": "Ground support",
-        "description": "Layout, ballast, truss build. The parts that carry everything else."
+        "description": "Roofs and towers — indoor grids and open-air builds alike. Hundreds of stages up, hundreds back down."
       },
       "plots": {
         "title": "Rigging plots & design",
         "description": "Load calcs and rigging plots before the first motor goes up."
       },
-      "consultations": {
-        "title": "Venue consultations",
-        "description": "Walkthroughs, rigging surveys, limit letters. Straight answers from people who've been up there."
+      "prerigg": {
+        "title": "Pre-rigg",
+        "description": "When the roof can't take the show, we redistribute the load."
       },
       "stage": {
         "title": "Stage design",
         "description": "Stage design by Jarda — technical production with a decade on both sides of the truss."
+      },
+      "showCalls": {
+        "title": "Show calls",
+        "description": "Head rigger on the floor for load-in, show, and load-out. The voice on radio that knows what's hanging and what's next."
+      },
+      "venueConsultations": {
+        "title": "Venue consultations",
+        "description": "Walkthroughs, rigging surveys, limit letters. Straight answers from people who've been up there."
       }
     }
   },
@@ -51,7 +61,7 @@
     "venuesHeading": "Venues.",
     "venuesCaption": "Odds are we've hung a show in a venue you book regularly. The ones we haven't, we pick up fast — after a few hundred halls, not much surprises us anymore.",
     "toursHeading": "Tours & productions.",
-    "toursIntro": "Like every good rigger, we've worked for {artists} — we've collected so many tour shirts over the years that we've stopped buying anything else.",
+    "toursIntro": "Like every good rigger, we've worked for <artists>{names}</artists> — we've collected so many tour shirts over the years that we've stopped buying anything else.",
     "highlightsLabel": "Highlights",
     "highlights": {
       "esc": "Eurovision Song Contest (several editions)",
@@ -62,7 +72,10 @@
   "Crew": {
     "eyebrow": "MEET THE CREW",
     "heading": "The people hanging the show.",
-    "subhead": "One crew, known to each other — not a roster of strangers booked last minute.",
+    "p1": "One crew, known to each other — not a roster of strangers booked last minute.",
+    "p2": "We met on tours across Europe over the years. Different cities, different shows, the same handful of people kept ending up at the top of the truss together. You don't keep picking the same partners on rope unless they know what they're doing — and unless you trust them with your day.",
+    "p3": "The friendship came after. The reason we work together is that everyone here is good at this, and safe at it. That part comes first.",
+    "p4": "When you book one of us, you book a crew that already knows how the others move.",
     "photoComing": "Photo coming soon",
     "bioComing": "Profile coming soon. Jarda will fill in the details before go-live.",
     "roles": {
@@ -120,7 +133,7 @@
       "required": "Required",
       "invalidEmail": "Looks like an invalid email"
     },
-    "alternative": "Or just email us: {email} · Call: {phone}"
+    "alternative": "Or just email us: <email></email> · Call: <phone></phone>"
   },
   "Faq": {
     "openLabel": "FAQ",

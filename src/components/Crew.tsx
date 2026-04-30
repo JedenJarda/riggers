@@ -27,9 +27,12 @@ export function Crew() {
         <h2 className="font-display text-4xl font-medium text-cream sm:text-5xl md:text-6xl">
           {t("heading")}
         </h2>
-        <p className="mt-5 max-w-2xl text-base leading-relaxed text-mist/75 md:text-lg">
-          {t("subhead")}
-        </p>
+        <div className="mt-5 max-w-3xl space-y-4 text-base leading-relaxed md:text-lg">
+          <p className="text-cream">{t("p1")}</p>
+          <p className="text-mist/75">{t("p2")}</p>
+          <p className="text-mist/75">{t("p3")}</p>
+          <p className="text-cream">{t("p4")}</p>
+        </div>
 
         <div className="mt-14 flex flex-wrap justify-center gap-6 sm:grid sm:grid-cols-2 sm:justify-items-stretch lg:grid-cols-3">
           {MEMBER_IDS.map((id, i) => (

@@ -1,6 +1,6 @@
 {
   "Hero": {
-    "eyebrow": "SÍDLO V ČR · TURNÉ PO EU",
+    "eyebrow": "ČESKÁ PARTA · EVROPSKÝ DOSAH",
     "headlineMain": "Vaši lokální riggeři",
     "headlineAccent": "po celé Evropě.",
     "subhead": "Když lokální tým nestačí, zavolejte přátele. Kolektiv freelance riggerů, kteří přijíždějí na vaše místo a znají motory, úvazky i všechny zkratky backstage.",
@@ -12,9 +12,11 @@
   },
   "About": {
     "eyebrow": "KDO JSME",
-    "p1": "Jsme kolektiv freelance riggerů se sídlem v České republice, kteří pracují po celé Evropě jako lokální rozšíření vašeho týmu. Když váš místní štáb potřebuje pár rukou navíc — nebo šest — jsme ti, kdo dorazí, zná halu, má s sebou výbavu a mluví vaším jazykem.",
-    "p2": "Jsme freelanceři, ne agentura. Váš rozpočet jde lidem, kteří věší show — proto si můžeme dovolit certifikace, výbavu i deset a více let turné za každým z nás.",
-    "p3": "Zarezervujte si nás jako svoje lokální riggery. Ať už kdekoli v Evropě."
+    "p1": "Jsme český kolektiv freelance riggerů, který pracuje po celé Evropě — ground, up, head. Stovky show, desítky arén, každý z nás přes deset let na lajnách.",
+    "p2": "Když má váš tým bookované dvě show stejný víkend, nebo když turné, které vám přijíždí do haly, potřebuje víc rukou, než máte, tam přicházíme my. Jeden rigger. Šest. Cokoli říká call sheet.",
+    "p3": "IRATA, IPAF, A1 formuláře, plné pojištění odpovědnosti a pracovních úrazů po celé EU. Všichni, všechno aktuální.",
+    "p4": "Žádná agenturní marže, žádná mezivrstva. Najímáte si freelancery napřímo — a proto si můžeme držet certifikace v platnosti, gear vyladěný a v partě jen lidi, které byste sami chtěli mít vedle sebe na laně.",
+    "p5": "Zarezervujte si nás jako svoje lokální riggery. Ať už kdekoli v Evropě."
   },
   "Services": {
     "eyebrow": "CO DĚLÁME",
@@ -22,7 +24,7 @@
     "items": {
       "rigging": {
         "title": "Rigging",
-        "description": "Up, ground, head. Kompletní rigging štáb pro arénové produkce."
+        "description": "Up, ground, head. Pozice, které potřebujete obsadit, když je show větší než vaše sestava."
       },
       "climbing": {
         "title": "Climbing",
@@ -30,19 +32,27 @@
       },
       "groundSupport": {
         "title": "Ground support",
-        "description": "Layout, ballast, stavba trussů. Základ, na kterém stojí zbytek."
+        "description": "Střechy a věže — indoor gridy i open-air buildy. Stovky stagí nahoru, stovky zpátky dolů."
       },
       "plots": {
         "title": "Rigging ploty & návrhy",
         "description": "Load calcs a rigging ploty dřív, než se první motor dostane nahoru."
       },
-      "consultations": {
-        "title": "Konzultace venue",
-        "description": "Obhlídky, rigging survey, limit letters. Přímé odpovědi od lidí, co tam nahoře byli."
+      "prerigg": {
+        "title": "Pre-rigg",
+        "description": "Když strop neunese show, přerozdělíme zátěž."
       },
       "stage": {
         "title": "Stage design",
         "description": "Stage design od Jardy — technická produkce s dekádou na obou stranách trussu."
+      },
+      "showCalls": {
+        "title": "Show calls",
+        "description": "Head rigger na place na load-in, show i load-out. Hlas v radiu, který ví, co visí a co je dál."
+      },
+      "venueConsultations": {
+        "title": "Konzultace venue",
+        "description": "Obhlídky, rigging survey, limit letters. Přímé odpovědi od lidí, co tam nahoře byli."
       }
     }
   },
@@ -51,7 +61,7 @@
     "venuesHeading": "Haly.",
     "venuesCaption": "Je dost pravděpodobné, že jsme věšeli show v hale, kterou si bookujete pravidelně. Ty, které neznáme, si přečteme rychle — po pár stovkách hal už nás moc nepřekvapí.",
     "toursHeading": "Turné & produkce.",
-    "toursIntro": "Jako každý dobrý rigger jsme pracovali pro {artists} — nasbírali jsme tolik tour triček, že jsme už nic jiného nekupujeme.",
+    "toursIntro": "Jako každý dobrý rigger jsme pracovali pro <artists>{names}</artists> — nasbírali jsme tolik tour triček, že jsme už nic jiného nekupujeme.",
     "highlightsLabel": "Highlights",
     "highlights": {
       "esc": "Eurovision Song Contest (několik ročníků)",
@@ -62,7 +72,10 @@
   "Crew": {
     "eyebrow": "POZNEJTE TÝM",
     "heading": "Lidé, co věší show.",
-    "subhead": "Jeden tým, který se zná — ne roster cizích lidí bookovaných na poslední chvíli.",
+    "p1": "Jedna parta, která se zná navzájem — ne soupiska cizích lidí bookovaných na poslední chvíli.",
+    "p2": "Potkávali jsme se na turné po Evropě roky. Jiná města, jiné show, ale stejná hrstka lidí pořád končila spolu nahoře na trussu. Nevybíráš si pořád ty samé parťáky na lano, pokud nevědí, co dělají — a pokud jim nesvěříš svůj den.",
+    "p3": "Kamarádství přišlo až potom. Důvod, proč pracujeme spolu, je ten, že každý tady je v tom dobrý, a dělá to bezpečně. To je na prvním místě.",
+    "p4": "Když si bookuješ jednoho z nás, bookuješ partu, která už ví, jak se ostatní pohybují.",
     "photoComing": "Fotka brzy",
     "bioComing": "Profil brzy. Jarda doplní detaily před go-live.",
     "roles": {
@@ -120,7 +133,7 @@
       "required": "Povinné",
       "invalidEmail": "Neplatný email"
     },
-    "alternative": "Nebo nám napište: {email} · Zavolejte: {phone}"
+    "alternative": "Nebo nám napište: <email></email> · Zavolejte: <phone></phone>"
   },
   "Faq": {
     "openLabel": "FAQ",

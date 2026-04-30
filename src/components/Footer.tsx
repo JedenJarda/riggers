@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { FaqModal } from "./FaqModal";
+import { Wordmark } from "./Wordmark";
 
 // Matches the placeholders in BookUs.tsx — swap both before go-live.
 const CONTACT_EMAIL = "hello@riggers.cz";
@@ -17,9 +18,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col gap-12 md:flex-row md:justify-between">
         {/* Brand + tagline */}
         <div className="md:max-w-md">
-          <div className="font-display text-xl font-medium text-cream">
-            riggers<span className="text-neon-300">.cz</span>
-          </div>
+          <Wordmark size="sm" />
           <p className="mt-3 text-sm leading-relaxed text-mist/70">
             {t("tagline")}
           </p>

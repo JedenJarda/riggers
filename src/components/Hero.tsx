@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { EuropeMap } from "./EuropeMap";
 import { LanguageSwitcher } from "./LanguageSwitcher";
-import { Logo } from "./Logo";
+import { Wordmark } from "./Wordmark";
 import type { CountryPath, GlobeShape, ProjectedCity, Route } from "@/lib/europe-geo";
 
 type Props = {
@@ -58,40 +58,17 @@ export function Hero({ countries, cities, routes, globe, viewX, viewY, viewW, vi
         <div className="absolute inset-y-0 left-0 w-3/5 bg-gradient-to-r from-ink-950 via-ink-950/80 to-transparent" />
       </div>
 
-      {/* Top bar — language switcher only; logo lives lower, aligned
-          with the headline column. */}
+      {/* Top bar — wordmark left, language switcher right. */}
       <div className="absolute inset-x-0 top-0 z-30">
-        <div className="flex justify-end px-6 py-7 md:px-12 lg:px-20">
+        <div className="flex items-start justify-between px-6 py-7 md:px-12 lg:px-20">
+          <Wordmark size="md" className="mt-[50px]" />
           <LanguageSwitcher />
         </div>
       </div>
 
-      {/* Neon logo — flickers on once `started`. Sits between the top of
-          the page and the headline, left-aligned with the "Your" of the H1. */}
-      <div className="absolute inset-x-0 top-[13%] z-30">
-        <div className="px-6 md:px-12 lg:px-20">
-          {/* started=false intentionally — the logo is a static identity
-              marker while the map carries the whole intro animation. */}
-          <Logo width={280} started={false} />
-        </div>
-      </div>
-
-      {/* Eyebrow / headline / subhead / CTA — anchored left within the 1140 frame */}
+      {/* Headline / subhead / CTA — anchored left within the 1140 frame */}
       <div className="relative z-20 flex min-h-[100svh] flex-col justify-center px-6 md:px-12 lg:px-20">
         <div className="mt-10 max-w-xl md:max-w-2xl">
-          {/* Eyebrow: small tracker tagline with a purple dash */}
-          <motion.div
-            className="mb-7 flex items-center gap-4"
-            initial={{ opacity: 0, y: 10 }}
-            animate={started ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-            transition={{ duration: 0.6 * SLOW, delay: 0.15 * SLOW, ease: "easeOut" }}
-          >
-            <span className="h-px w-12 bg-neon-400" />
-            <span className="text-xs font-medium uppercase tracking-[0.32em] text-neon-300">
-              {t("eyebrow")}
-            </span>
-          </motion.div>
-
           <motion.h1
             className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium leading-[1.05] tracking-tight text-cream"
             initial={{ opacity: 0, y: 24 }}

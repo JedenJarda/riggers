@@ -17,7 +17,9 @@ export function WhoWeAre() {
           <div className="space-y-6 font-display text-xl leading-relaxed text-cream sm:text-2xl md:text-[26px] md:leading-[1.35]">
             <p>{t("p1")}</p>
             <p className="text-mist/80">{t("p2")}</p>
-            <p>{t("p3")}</p>
+            <p className="text-cream">{t("p4")}</p>
+            <p className="text-mist/80">{t("p3")}</p>
+            <p>{t("p5")}</p>
           </div>
         </div>
       </div>

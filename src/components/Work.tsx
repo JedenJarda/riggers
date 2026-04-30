@@ -79,12 +79,11 @@ export function Work() {
             {t("toursHeading")}
           </h3>
           <p className="mt-8 max-w-3xl text-base leading-relaxed text-mist/80 md:text-lg">
-            {t("toursIntro", {
-              artists: (
-                <strong className="font-semibold text-cream">
-                  {ARTISTS.join(", ")}
-                </strong>
-              ) as unknown as string,
+            {t.rich("toursIntro", {
+              names: ARTISTS.join(", "),
+              artists: (chunks) => (
+                <strong className="font-semibold text-cream">{chunks}</strong>
+              ),
             })}
           </p>
 

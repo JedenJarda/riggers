@@ -1,6 +1,6 @@
 {
   "Hero": {
-    "eyebrow": "CZ · BASIERT · EU · TOURING",
+    "eyebrow": "TSCHECHISCHE CREW · EUROPÄISCHE REICHWEITE",
     "headlineMain": "Eure Local Rigger",
     "headlineAccent": "in ganz Europa.",
     "subhead": "Wenn das Local-Team nicht reicht, ruft eure Freunde. Ein Kollektiv freiberuflicher Rigger, die in eurer Venue ankommen und die Motoren, Bridles und jede Abkürzung im Backstage kennen.",
@@ -12,9 +12,11 @@
   },
   "About": {
     "eyebrow": "WER WIR SIND",
-    "p1": "Wir sind ein Kollektiv freiberuflicher Rigger aus der Tschechischen Republik, die in ganz Europa als lokale Erweiterung eures Teams arbeiten. Wenn euer Local-Crew ein paar Hände mehr braucht — oder sechs — sind wir die, die ankommen, die Venue kennen, Gear dabei haben und eure Sprache sprechen.",
-    "p2": "Wir sind Freelancer, keine Agentur. Euer Budget geht an die Leute, die die Show aufhängen — deshalb können wir uns die Zertifizierungen leisten, die wir haben, das Gear, das wir mitbringen, und die zehn plus Jahre Tour-Erfahrung hinter jedem von uns.",
-    "p3": "Bucht uns als eure Local Rigger. Wo auch immer in Europa das gerade ist."
+    "p1": "Wir sind ein tschechisches Kollektiv freiberuflicher Rigger, das in ganz Europa arbeitet — ground, up, head. Hunderte Shows, dutzende Arenen, jeder von uns über zehn Jahre auf den Lines.",
+    "p2": "Wenn eure Crew am selben Wochenende auf zwei Shows gebucht ist, oder wenn die Tour, die in eure Venue rollt, mehr Hände braucht, als ihr habt — da kommen wir ins Spiel. Ein Rigger. Sechs. Was immer der Call Sheet sagt.",
+    "p3": "IRATA, IPAF, A1-Bescheinigungen, volle Haftpflicht- und Berufsunfallversicherung in der gesamten EU. Alle von uns, alles aktuell.",
+    "p4": "Keine Agenturmarge, keine Zwischenschicht. Ihr bucht Freelancer direkt — und deshalb können wir die Zertifizierungen aktuell halten, das Gear in Schuss, und die Crew, mit der wir laufen, ist die, die ihr selbst neben euch am Seil haben wollt.",
+    "p5": "Bucht uns als eure Local Rigger. Wo auch immer in Europa das gerade ist."
   },
   "Services": {
     "eyebrow": "WAS WIR MACHEN",
@@ -22,7 +24,7 @@
     "items": {
       "rigging": {
         "title": "Rigging",
-        "description": "Up, Ground, Head. Volle Rigging-Crews für Arena-Scale-Produktionen."
+        "description": "Up, ground, head. Die Positionen, die ihr besetzen müsst, wenn die Show größer ist als eure Crew."
       },
       "climbing": {
         "title": "Climbing",
@@ -30,19 +32,27 @@
       },
       "groundSupport": {
         "title": "Ground Support",
-        "description": "Layout, Ballast, Truss-Aufbau. Die Teile, die alles andere tragen."
+        "description": "Dächer und Türme — Indoor Grids wie Open-Air Builds. Hunderte Stages aufgebaut, hunderte wieder abgebaut."
       },
       "plots": {
         "title": "Rigging Plots & Design",
         "description": "Lastberechnungen und Rigging Plots bevor der erste Motor hochgeht."
       },
-      "consultations": {
-        "title": "Venue-Beratung",
-        "description": "Walkthroughs, Rigging Surveys, Limit Letters. Klare Antworten von Leuten, die da oben waren."
+      "prerigg": {
+        "title": "Pre-Rigg",
+        "description": "Wenn das Dach die Show nicht trägt, verteilen wir die Last neu."
       },
       "stage": {
         "title": "Stage Design",
         "description": "Stage Design von Jarda — technische Produktion mit einem Jahrzehnt auf beiden Seiten des Trusses."
+      },
+      "showCalls": {
+        "title": "Show Calls",
+        "description": "Head Rigger auf dem Boden für Load-in, Show und Load-out. Die Stimme im Funk, die weiß, was hängt und was als nächstes kommt."
+      },
+      "venueConsultations": {
+        "title": "Venue-Beratung",
+        "description": "Walkthroughs, Rigging Surveys, Limit Letters. Klare Antworten von Leuten, die da oben waren."
       }
     }
   },
@@ -51,7 +61,7 @@
     "venuesHeading": "Venues.",
     "venuesCaption": "Die Chancen stehen gut, dass wir eine Show in einer Venue gehängt haben, die ihr regelmäßig bucht. Die, die wir nicht kennen, lernen wir schnell — nach ein paar hundert Hallen überrascht uns nicht mehr viel.",
     "toursHeading": "Touren & Produktionen.",
-    "toursIntro": "Wie jeder gute Rigger haben wir für {artists} gearbeitet — wir haben über die Jahre so viele Tour-Shirts gesammelt, dass wir nichts anderes mehr kaufen.",
+    "toursIntro": "Wie jeder gute Rigger haben wir für <artists>{names}</artists> gearbeitet — wir haben über die Jahre so viele Tour-Shirts gesammelt, dass wir nichts anderes mehr kaufen.",
     "highlightsLabel": "Highlights",
     "highlights": {
       "esc": "Eurovision Song Contest (mehrere Ausgaben)",
@@ -62,7 +72,10 @@
   "Crew": {
     "eyebrow": "LERNT DAS TEAM KENNEN",
     "heading": "Die Leute, die die Show hängen.",
-    "subhead": "Ein Team, das sich kennt — kein Roster aus Fremden, die auf den letzten Drücker gebucht werden.",
+    "p1": "Eine Crew, die sich kennt — keine Liste von Fremden, last minute gebucht.",
+    "p2": "Wir haben uns über die Jahre auf Tours quer durch Europa kennengelernt. Andere Städte, andere Shows, dieselbe Handvoll Leute landete immer wieder gemeinsam oben am Truss. Du wählst nicht immer wieder dieselben Partner ans Seil, wenn sie nicht wüssten, was sie tun — und wenn du ihnen deinen Tag nicht anvertrauen würdest.",
+    "p3": "Die Freundschaft kam danach. Der Grund, warum wir zusammenarbeiten, ist, dass jeder hier gut darin ist, und sicher darin. Das kommt zuerst.",
+    "p4": "Wenn du einen von uns buchst, buchst du eine Crew, die schon weiß, wie sich die anderen bewegen.",
     "photoComing": "Foto kommt bald",
     "bioComing": "Profil kommt bald. Jarda füllt die Details vor dem Go-Live.",
     "roles": {
@@ -120,7 +133,7 @@
       "required": "Pflichtfeld",
       "invalidEmail": "Ungültige E-Mail"
     },
-    "alternative": "Oder schreibt uns: {email} · Ruft an: {phone}"
+    "alternative": "Oder schreibt uns: <email></email> · Ruft an: <phone></phone>"
   },
   "Faq": {
     "openLabel": "FAQ",

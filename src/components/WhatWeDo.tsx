@@ -6,11 +6,13 @@ import { Eyebrow, SectionFrame } from "./SectionFrame";
 
 const SERVICE_KEYS = [
   "rigging",
-  "climbing",
+  "prerigg",
   "groundSupport",
   "plots",
-  "consultations",
+  "climbing",
   "stage",
+  "showCalls",
+  "venueConsultations",
 ] as const;
 
 // Small inline glyphs — neutral line art rather than polished icons so
@@ -37,21 +39,37 @@ const ICONS: Record<(typeof SERVICE_KEYS)[number], React.ReactNode> = {
   ),
   plots: (
     <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-      <rect x="6" y="6" width="28" height="28" rx="2" />
-      <path d="M6 14h28M14 6v28M22 14v20M6 22h16" />
-    </svg>
-  ),
-  consultations: (
-    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
       <circle cx="20" cy="20" r="12" />
       <path d="M20 8v24M8 20h24" />
       <circle cx="20" cy="20" r="4" />
+    </svg>
+  ),
+  prerigg: (
+    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+      <path d="M4 12h32M4 28h32" />
+      <path d="M4 12v16M36 12v16" />
+      <path d="M4 12 12 28 20 12 28 28 36 12" />
     </svg>
   ),
   stage: (
     <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
       <path d="M4 28h32M8 28V14h24v14M14 14V8h12v6" />
       <path d="M14 22h12" />
+    </svg>
+  ),
+  showCalls: (
+    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+      <rect x="13" y="10" width="14" height="22" rx="1.5" />
+      <path d="M20 6v4" />
+      <path d="M16 16h8M16 20h8" />
+      <circle cx="20" cy="27" r="1.5" />
+    </svg>
+  ),
+  venueConsultations: (
+    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+      <path d="M10 8h14l4 4v20H10z" />
+      <path d="M24 8v4h4" />
+      <path d="M14 18h10M14 22h10M14 26h6" />
     </svg>
   ),
 };
@@ -67,7 +85,7 @@ export function WhatWeDo() {
           {t("heading")}
         </h2>
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
           {SERVICE_KEYS.map((key, i) => (
             <motion.div
               key={key}
@@ -75,7 +93,7 @@ export function WhatWeDo() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-10% 0px" }}
               transition={{ duration: 0.5, delay: i * 0.05, ease: "easeOut" }}
-              className="group relative overflow-hidden rounded-xl border border-mist/10 bg-ink-900/60 p-6 transition-colors duration-300 hover:border-neon-400/50"
+              className={`group relative overflow-hidden rounded-xl border border-mist/10 bg-ink-900/60 p-6 transition-colors duration-300 hover:border-neon-400/50 lg:col-span-2 ${i === 6 ? "lg:col-start-2" : ""}`}
             >
               {/* Purple tint on hover */}
               <span
