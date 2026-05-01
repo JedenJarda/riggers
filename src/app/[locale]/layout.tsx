@@ -20,11 +20,28 @@ const display = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+const TITLE = "riggers.cz — Your Local Riggers across Europe";
+const DESCRIPTION =
+  "A collective of freelance riggers based in the Czech Republic, working across Europe as a local extension of your team.";
+
 export const metadata: Metadata = {
-  title: "riggers.cz — Your Local Riggers across Europe",
-  description:
-    "A collective of freelance riggers based in the Czech Republic, working across Europe as a local extension of your team.",
+  title: TITLE,
+  description: DESCRIPTION,
   metadataBase: new URL("https://riggers.cz"),
+  openGraph: {
+    type: "website",
+    url: "https://riggers.cz",
+    title: TITLE,
+    description: DESCRIPTION,
+    siteName: "riggers.cz",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ["/og.png"],
+  },
 };
 
 export function generateStaticParams() {
