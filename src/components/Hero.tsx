@@ -80,10 +80,13 @@ export function Hero({ countries, cities, routes, globe, viewX, viewY, viewW, vi
       const fade =
         "linear-gradient(to bottom, transparent 0, black 20px, black 100%), " +
         "linear-gradient(to right, transparent 0, black 20px, black 100%)";
-      wrap.style.maskImage = fade;
+      // Set legacy first, modern second — some browsers alias
+      // -webkit-mask-composite into mask-composite when written via the
+      // CSSOM, so writing modern second guarantees `intersect` survives.
       wrap.style.webkitMaskImage = fade;
-      wrap.style.maskComposite = "intersect";
+      wrap.style.maskImage = fade;
       wrap.style.webkitMaskComposite = "source-in";
+      wrap.style.maskComposite = "intersect";
     }
     applyMobileShift();
     // CTA enters via a motion translateY that takes ~0.78s to settle —
