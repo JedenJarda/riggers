@@ -7,7 +7,7 @@
     "cta": "Zarezervujte si nás",
     "ctaSecondary": "nebo se podívejte, kdo jsme",
     "credentials": "EST · CZ · IRATA · IPAF · A1",
-    "tagline": "17 MÍST · PO CELÉ EU · JEDEN TÝM",
+    "tagline": "DESÍTKY MÍST · PO CELÉ EU · JEDEN TÝM",
     "scroll": "Scroll"
   },
   "About": {
@@ -59,7 +59,8 @@
   "Work": {
     "eyebrow": "KDE JSME PRACOVALI",
     "venuesHeading": "Haly.",
-    "venuesCaption": "Je dost pravděpodobné, že jsme věšeli show v hale, kterou si bookujete pravidelně. Ty, které neznáme, si přečteme rychle — po pár stovkách hal už nás moc nepřekvapí.",
+    "venuesIntro": "Pracovali jsme v tolika halách, že je nedokážeme všechny vyjmenovat — upřímně, ani spočítat. Což znamená, že když nás bookujete do haly, ve které jsme ještě nebyli, není to problém. Po pár stovkách rooms je nová hala ta jednodušší část dne.",
+    "venuesCaption": "Vyjmenovat všechny tour, na kterých jsme pracovali, by vydalo na pár dalších stran — tak to přeskočíme.\nJednodušeji řečeno: nikdo z nás si už roky nekoupil pracovní tričko.\nNosíme to, co nám tour rozdávají.\n\nTěšíme se, až dostaneme další od vás.",
     "toursHeading": "Turné & produkce.",
     "toursIntro": "Jako každý dobrý rigger jsme pracovali pro <artists>{names}</artists> — nasbírali jsme tolik tour triček, že jsme už nic jiného nekupujeme.",
     "highlightsLabel": "Highlights",
@@ -86,27 +87,48 @@
     "members": {
       "jarda": {
         "name": "Jarda",
-        "role": "Zakladatel & Head Rigger",
+        "role": "Zakladatel / Head rigger\nUp & Down rigger",
+        "cardLine": "15 let rozdělených mezi produkční kanceláří a trussem. Žije tam, kde je další show.",
         "shortBio": "Žije v Curychu, v Česku v horách.",
         "longBio": "Šest let v technické produkci — festivaly, koncerty, sportovní eventy — než se rozhodl, že radši bude nahoře na trussu než u laptopu ve 2 ráno. Teď nespí tak jako tak.",
         "projects": "Technická produkce a 3D modelování pro první ročník Laver Cupu v O2 Areně Praha, Eurovision Song Contest 2025, plus pravidelný residency po švýcarských a německých halách.",
-        "tags": "IRATA L3 · IPAF · A1 · EN fluent · DE — učí se"
+        "tags": "IRATA · IPAF · A1 · EN fluent · DE — učí se"
       },
       "ales": {
         "name": "Aleš",
-        "role": "Up Rigger",
-        "shortBio": "Sídlí v ČR. Profil brzy.",
-        "longBio": "Profil brzy — Jarda doplní příběh, zajímavé haly a osobní detaily před go-live.",
-        "projects": "Notable projekty brzy.",
+        "role": "Up rigger\nDown rigger",
+        "cardLine": "Zimy na Tenerife, sezóny na švýcarských show. Dotáhl ten balanc, který my ostatní pořád honíme.",
+        "shortBio": "Sídlí v ČR.",
+        "longBio": "Profil brzy. Snáz ho chytíš na trussu než u klávesnice\n— doplníme to, až bude doma ze show dost dlouho na to, aby to napsal.",
+        "projects": "",
         "tags": "IRATA · IPAF · A1 · EN · DE — učí se"
       },
       "filip": {
         "name": "Filip",
-        "role": "Ground Rigger",
-        "shortBio": "Sídlí v ČR. Profil brzy.",
-        "longBio": "Profil brzy — Jarda doplní příběh, zajímavé haly a osobní detaily před go-live.",
-        "projects": "Notable projekty brzy.",
+        "role": "Up & Down rigger\nTour rigger",
+        "cardLine": "Doma v Praze čeká miminko. Říká ano na každou show, kde je potřeba rigging — z pochopitelných důvodů.",
+        "shortBio": "Sídlí v ČR.",
+        "longBio": "Profil brzy. Snáz ho chytíš na trussu než u klávesnice\n— doplníme to, až bude doma ze show dost dlouho na to, aby to napsal.",
+        "projects": "",
         "tags": "IRATA · IPAF · A1 · EN · DE — učí se"
+      },
+      "petr": {
+        "name": "Petr",
+        "role": "Up rigger\nDown rigger",
+        "cardLine": "Toho chceš mít ve střeše. Nahoře je bestie — silný, rychlý, profesionální.",
+        "shortBio": "Sídlí v ČR.",
+        "longBio": "Profil brzy. Snáz ho chytíš na trussu než u klávesnice\n— doplníme to, až bude doma ze show dost dlouho na to, aby to napsal.",
+        "projects": "",
+        "tags": "IRATA L2 · IPAF · A1 · EN · DE — učí se"
+      },
+      "hugo": {
+        "name": "Hugo",
+        "role": "Up & Down rigger\nTour rigger",
+        "cardLine": "Riggoval dřív, než si mohl legálně dát pivo. Doma rodina, americký fotbal když není na trussu.",
+        "shortBio": "Sídlí v ČR.",
+        "longBio": "Profil brzy. Snáz ho chytíš na trussu než u klávesnice\n— doplníme to, až bude doma ze show dost dlouho na to, aby to napsal.",
+        "projects": "",
+        "tags": "IRATA L2 · IPAF · A1 · EN · DE — učí se"
       }
     },
     "close": "Zavřít"
@@ -114,13 +136,13 @@
   "Book": {
     "eyebrow": "REZERVACE",
     "heading": "Označte termíny.",
+    "intro": "Asi nejjednodušší rezervační systém v branži — a to záměrně. Klikněte na dny, nechte e‑mail a zbytek doladíme po telefonu. Žádné maily o termínech, žádné přílohy s kalendáři — než vám zavoláme zpátky, už víme, co potřebujete.",
     "subhead": "Ozveme se, jakmile slezeme ze střechy.",
     "calendarLegend": "Klikněte na dny pro výběr — na mobilu přejeďte prstem přes týden.",
     "selectedLabel": "Vybrané termíny",
     "form": {
       "venue": "Město / Hala",
       "eventType": "Typ akce",
-      "eventTypePlaceholder": "např. Arena show, 80k lbs rigging",
       "email": "Email",
       "phone": "Telefon",
       "phoneHint": "volitelné",

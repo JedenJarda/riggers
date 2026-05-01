@@ -7,7 +7,7 @@
     "cta": "Book us",
     "ctaSecondary": "or see who we are",
     "credentials": "EST · CZ · IRATA · IPAF · A1",
-    "tagline": "17 VENUES · ACROSS EU · ONE CREW",
+    "tagline": "DOZENS OF VENUES · ACROSS EU · ONE CREW",
     "scroll": "Scroll"
   },
   "About": {
@@ -59,7 +59,8 @@
   "Work": {
     "eyebrow": "WHERE WE'VE WORKED",
     "venuesHeading": "Venues.",
-    "venuesCaption": "Odds are we've hung a show in a venue you book regularly. The ones we haven't, we pick up fast — after a few hundred halls, not much surprises us anymore.",
+    "venuesIntro": "We've worked in more halls than we can list — honestly, more than we can remember. Which means if you're booking us into a venue we haven't been in yet, that's fine. After a few hundred rooms, picking up a new one is the easy part of the day.",
+    "venuesCaption": "Listing every tour we've worked would take a few more pages — so we'll skip it.\nEasier to put it this way: none of us has bought a working t-shirt in years.\nWe just wear what the tours hand out.\n\nLooking forward to getting another one with you.",
     "toursHeading": "Tours & productions.",
     "toursIntro": "Like every good rigger, we've worked for <artists>{names}</artists> — we've collected so many tour shirts over the years that we've stopped buying anything else.",
     "highlightsLabel": "Highlights",
@@ -86,27 +87,48 @@
     "members": {
       "jarda": {
         "name": "Jarda",
-        "role": "Founder & Head Rigger",
+        "role": "Founder / Head rigger\nUp & Down rigger",
+        "cardLine": "15 years split between the production office and the truss. Lives wherever the next venue is.",
         "shortBio": "Zürich-based. Lives in the Czech mountains when he's home.",
         "longBio": "Six years in technical production — festivals, concerts, sports events — before deciding he'd rather be up on a truss than behind a laptop at 2 a.m. Now doesn't sleep either way.",
         "projects": "Technical production and 3D modeling for the inaugural Laver Cup at O2 Arena Prague, Eurovision Song Contest 2025, plus a steady residency across Swiss and German venues.",
-        "tags": "IRATA L3 · IPAF · A1 · EN fluent · DE — learning in progress"
+        "tags": "IRATA · IPAF · A1 · EN fluent · DE — learning in progress"
       },
       "ales": {
         "name": "Aleš",
-        "role": "Up Rigger",
-        "shortBio": "Based in Czechia. Profile coming soon.",
-        "longBio": "Profile coming soon — Jarda will fill in story, notable venues, and the personal details before go-live.",
-        "projects": "Notable projects coming soon.",
+        "role": "Up rigger\nDown rigger",
+        "cardLine": "Winters on Tenerife, seasons on Swiss shows. Worked out the balance the rest of us are still chasing.",
+        "shortBio": "Based in Czechia.",
+        "longBio": "Profile coming soon. Easier to catch him on the truss than at a keyboard\n— we'll fill it in when he's back from a show long enough to write it.",
+        "projects": "",
         "tags": "IRATA · IPAF · A1 · EN · DE — in progress"
       },
       "filip": {
         "name": "Filip",
-        "role": "Ground Rigger",
-        "shortBio": "Based in Czechia. Profile coming soon.",
-        "longBio": "Profile coming soon — Jarda will fill in story, notable venues, and the personal details before go-live.",
-        "projects": "Notable projects coming soon.",
+        "role": "Up & Down rigger\nTour rigger",
+        "cardLine": "Baby on the way in Prague. Says yes to every show that needs rigging — for obvious reasons.",
+        "shortBio": "Based in Czechia.",
+        "longBio": "Profile coming soon. Easier to catch him on the truss than at a keyboard\n— we'll fill it in when he's back from a show long enough to write it.",
+        "projects": "",
         "tags": "IRATA · IPAF · A1 · EN · DE — in progress"
+      },
+      "petr": {
+        "name": "Petr",
+        "role": "Up rigger\nDown rigger",
+        "cardLine": "The one you want in the roofs. A beast up there — strong, fast, professional.",
+        "shortBio": "Based in Czechia.",
+        "longBio": "Profile coming soon. Easier to catch him on the truss than at a keyboard\n— we'll fill it in when he's back from a show long enough to write it.",
+        "projects": "",
+        "tags": "IRATA L2 · IPAF · A1 · EN · DE — in progress"
+      },
+      "hugo": {
+        "name": "Hugo",
+        "role": "Up & Down rigger\nTour rigger",
+        "cardLine": "Started rigging before he could legally drink. Family at home, American football when he's not on the beams.",
+        "shortBio": "Based in Czechia.",
+        "longBio": "Profile coming soon. Easier to catch him on the truss than at a keyboard\n— we'll fill it in when he's back from a show long enough to write it.",
+        "projects": "",
+        "tags": "IRATA L2 · IPAF · A1 · EN · DE — in progress"
       }
     },
     "close": "Close"
@@ -114,13 +136,13 @@
   "Book": {
     "eyebrow": "BOOK US",
     "heading": "Mark the dates.",
+    "intro": "Probably the simplest booking system in the industry — and that's on purpose. Click the days, drop an email, we'll take it from there on a call. No emails about dates, no calendar attachments — we already know what you need by the time we ring back.",
     "subhead": "We'll get back to you as soon as we're off the roof.",
     "calendarLegend": "Click days to select — drag across weekdays on mobile.",
     "selectedLabel": "Selected dates",
     "form": {
       "venue": "City / Venue",
       "eventType": "Event type",
-      "eventTypePlaceholder": "e.g. Arena show, 80k lbs rigging",
       "email": "Email",
       "phone": "Phone",
       "phoneHint": "optional",

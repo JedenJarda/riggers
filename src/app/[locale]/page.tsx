@@ -45,9 +45,9 @@ export default async function Home({
       />
       <WhoWeAre />
       <WhatWeDo />
-      <Work />
       <Crew />
       <BookUs />
+      <Work />
       <Footer />
     </main>
   );

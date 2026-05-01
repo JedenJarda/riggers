@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { EuropeMap } from "./EuropeMap";
@@ -30,18 +30,79 @@ export function Hero({ countries, cities, routes, globe, viewX, viewY, viewW, vi
   // mount so the logo flicker (and everything that keys off it) starts
   // on page load — no audio, no user gesture required.
   const [started, setStarted] = useState(false);
+  const mapWrapRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     setStarted(true);
   }, []);
 
+  // Mobile-only: shift map so Prague lands 8px from the right edge and
+  // 8px above the BOOK US button's top. Desktop layout untouched.
+  useEffect(() => {
+    function applyMobileShift() {
+      const wrap = mapWrapRef.current;
+      const cta = ctaRef.current;
+      if (!wrap || !cta) return;
+      const W = window.innerWidth;
+      const isMobile = W < 768;
+      if (!isMobile) {
+        wrap.style.width = "";
+        wrap.style.left = "";
+        wrap.style.right = "";
+        wrap.style.transform = "";
+        wrap.style.maskImage = "";
+        wrap.style.webkitMaskImage = "";
+        wrap.style.maskComposite = "";
+        wrap.style.webkitMaskComposite = "";
+        return;
+      }
+      const H = window.innerHeight;
+      const buttonTop = cta.getBoundingClientRect().top;
+      // EuropeMap uses xMaxYMid slice on viewBox (0, 0, 960, 540) with
+      // Prague at PROJ (864, 270).
+      // Strategy on mobile: widen the wrapper past the viewport right
+      // edge so the slice's xMax alignment puts Prague ~18px from the
+      // viewport right, while the wrapper still starts at left:0 — so
+      // the map content reaches all the way to the left edge of the
+      // screen (no horizontal gap). Vertical Y is shifted so Prague
+      // lands 8px above the CTA's top.
+      const scale = Math.max(W / viewW, H / viewH);
+      const targetRightOffset = 18;
+      const extraRight = (viewW - 864) * scale - targetRightOffset;
+      wrap.style.left = "0";
+      wrap.style.right = "auto";
+      wrap.style.width = `${W + extraRight}px`;
+      const ty = (buttonTop - 8) - H / 2;
+      wrap.style.transform = `translateY(${ty}px)`;
+      // 20px fade on top + left edges so the hard cut against the dark
+      // background goes soft.
+      const fade =
+        "linear-gradient(to bottom, transparent 0, black 20px, black 100%), " +
+        "linear-gradient(to right, transparent 0, black 20px, black 100%)";
+      wrap.style.maskImage = fade;
+      wrap.style.webkitMaskImage = fade;
+      wrap.style.maskComposite = "intersect";
+      wrap.style.webkitMaskComposite = "source-in";
+    }
+    applyMobileShift();
+    // CTA enters via a motion translateY that takes ~0.78s to settle —
+    // re-measure once it has, so the shift uses the final button position.
+    const settleTimer = window.setTimeout(applyMobileShift, 1500);
+    window.addEventListener("resize", applyMobileShift);
+    return () => {
+      window.clearTimeout(settleTimer);
+      window.removeEventListener("resize", applyMobileShift);
+    };
+  }, [viewW, viewH]);
+
   return (
     <section className="relative isolate min-h-[100svh] overflow-hidden bg-ink-950">
-      {/* Map layer — full bleed. Prague's on-screen position is
-          controlled by GLOBE_CX inside europe-geo.ts, so no transform is
-          needed here. */}
+      {/* Map layer — full bleed on desktop. On mobile a JS effect above
+          shifts this wrapper via CSS transform so Prague pins next to the
+          BOOK US button. */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_60%_45%,#0d1230_0%,#070a1c_55%,#04050a_90%)]">
-        <div className="absolute inset-0">
+        <div ref={mapWrapRef} className="absolute inset-0">
           <EuropeMap
             countries={countries}
             cities={cities}
@@ -97,6 +158,7 @@ export function Hero({ countries, cities, routes, globe, viewX, viewY, viewW, vi
             transition={{ duration: 0.6 * SLOW, delay: 0.7 * SLOW, ease: "easeOut" }}
           >
             <a
+              ref={ctaRef}
               href="#book"
               className="group relative inline-flex items-center gap-3 border border-neon-400/70 px-7 py-3.5 text-sm md:text-base font-medium uppercase tracking-[0.22em] text-cream transition-all duration-300 hover:border-neon-300 hover:bg-neon-500/10 hover:[box-shadow:var(--shadow-neon-md)] focus:outline-none focus-visible:[box-shadow:var(--shadow-neon-md)]"
             >
@@ -137,23 +199,6 @@ export function Hero({ countries, cities, routes, globe, viewX, viewY, viewW, vi
         <div className="hidden sm:block">{t("tagline")}</div>
       </motion.div>
 
-      {/* Scroll indicator — sits above the footer meta row */}
-      <motion.div
-        className="absolute inset-x-0 bottom-16 z-20 flex justify-center"
-        initial={{ opacity: 0 }}
-        animate={started ? { opacity: 0.6 } : { opacity: 0 }}
-        transition={{ duration: 0.8 * SLOW, delay: 1.2 * SLOW }}
-      >
-        <div className="flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.32em] text-mist/60">
-          <span>{t("scroll")}</span>
-          <motion.span
-            className="block h-8 w-px bg-gradient-to-b from-neon-300 to-transparent"
-            animate={{ scaleY: [0.4, 1, 0.4], opacity: [0.4, 1, 0.4] }}
-            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-            style={{ transformOrigin: "top" }}
-          />
-        </div>
-      </motion.div>
     </section>
   );
 }

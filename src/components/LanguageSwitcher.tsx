@@ -30,27 +30,29 @@ export function LanguageSwitcher() {
       aria-label="Language"
       className="flex items-center gap-2 text-xs tracking-[0.18em] uppercase"
     >
-      {routing.locales.map((loc, i) => {
-        const isActive = loc === current;
-        const href = loc === routing.defaultLocale ? basePath : `/${loc}${basePath === "/" ? "" : basePath}`;
-        return (
-          <span key={loc} className="flex items-center gap-2">
-            <Link
-              href={href}
-              className={
-                isActive
-                  ? "text-neon-300 [text-shadow:0_0_8px_var(--color-neon-500)]"
-                  : "text-mist/60 hover:text-cream transition-colors"
-              }
-            >
-              {LABELS[loc]}
-            </Link>
-            {i < routing.locales.length - 1 && (
-              <span aria-hidden className="text-mist/30">·</span>
-            )}
-          </span>
-        );
-      })}
+      {routing.locales
+        .filter((loc) => loc !== "cs")
+        .map((loc, i, visible) => {
+          const isActive = loc === current;
+          const href = loc === routing.defaultLocale ? basePath : `/${loc}${basePath === "/" ? "" : basePath}`;
+          return (
+            <span key={loc} className="flex items-center gap-2">
+              <Link
+                href={href}
+                className={
+                  isActive
+                    ? "text-neon-300 [text-shadow:0_0_8px_var(--color-neon-500)]"
+                    : "text-mist/60 hover:text-cream transition-colors"
+                }
+              >
+                {LABELS[loc]}
+              </Link>
+              {i < visible.length - 1 && (
+                <span aria-hidden className="text-mist/30">·</span>
+              )}
+            </span>
+          );
+        })}
     </nav>
   );
 }

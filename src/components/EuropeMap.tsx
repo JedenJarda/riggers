@@ -169,7 +169,7 @@ export function EuropeMap({
   return (
     <svg
       viewBox={`${viewX} ${viewY} ${viewW} ${viewH}`}
-      preserveAspectRatio="xMidYMid slice"
+      preserveAspectRatio="xMaxYMid slice"
       className="absolute inset-0 h-full w-full"
     >
       <defs>
@@ -280,18 +280,28 @@ export function EuropeMap({
                 key={route.id}
                 d={route.d}
                 stroke="#d172ff"
-                strokeWidth={1.4}
+                strokeWidth={0.98}
                 strokeLinecap="round"
                 fill="none"
-                initial={{ pathLength: 0, opacity: 0 }}
+                initial={{ pathLength: 0, pathOffset: 0, opacity: 0 }}
                 animate={{
-                  pathLength: 1,
-                  // flying & landed both hold at 0.9; only "fading"
-                  // drives it down, slowly.
+                  // Flight: pathLength 0→1, pathOffset 0 — line draws
+                  // from Prague forward to the city. Fade: pathLength
+                  // 1→0 and pathOffset 0→1 simultaneously (visible
+                  // window shrinks from the Prague end forward) AND
+                  // opacity 0.9→0 — the line both un-draws like a
+                  // contrail dissipating and dims out at the same time.
+                  pathLength: isFading ? 0 : 1,
+                  pathOffset: isFading ? 1 : 0,
                   opacity: isFading ? 0 : 0.9,
                 }}
                 transition={{
-                  pathLength: { duration: flightSec, ease: "linear" },
+                  pathLength: isFading
+                    ? { duration: ARC_FADE_OUT_MS / 1000, ease: "linear" }
+                    : { duration: flightSec, ease: "linear" },
+                  pathOffset: isFading
+                    ? { duration: ARC_FADE_OUT_MS / 1000, ease: "linear" }
+                    : { duration: 0 },
                   opacity: isFading
                     ? { duration: ARC_FADE_OUT_MS / 1000, ease: "easeOut" }
                     : { duration: 0.25, ease: "easeOut" },

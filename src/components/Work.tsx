@@ -6,31 +6,36 @@ import { Eyebrow, SectionFrame } from "./SectionFrame";
 
 const VENUES = [
   "O2 Arena Prague",
-  "Hallenstadion Zürich",
-  "Mercedes-Benz Arena Berlin",
-  "Ziggo Dome Amsterdam",
-  "Johan Cruijff Arena Amsterdam",
+  "Uber Arena Berlin",
+  "Velodrom Berlin",
+  "Wien",
+  "Olympiastadion Berlin",
+  "Flughafen Tempelhof",
   "Lanxess Arena Köln",
+  "Brussels",
   "Barclays Arena Hamburg",
   "Festhalle Frankfurt",
-  "Palau Sant Jordi Barcelona",
-  "Milano",
+  "Hanns-Martin-Schleyer-Halle Stuttgart",
   "Paris",
+  "Olympiahalle München",
+  "Allianz Arena München",
+  "Hallenstadion Zürich",
+  "St. Jakobshalle Basel",
+  "Stadthalle Wien",
   "Antwerpen",
-  "Brussels",
-  "Wien",
+  "Ziggo Dome Amsterdam",
+  "Johan Cruijff Arena Amsterdam",
+  "Sportpaleis Antwerpen",
+  "Forest National Brussels",
+  "Accor Arena Paris",
+  "Milano",
+  "Mediolanum Forum Milano",
+  "Palau Sant Jordi Barcelona",
+  "WiZink Center Madrid",
+  "Oslo",
   "Palma de Mallorca",
-];
-
-const ARTISTS = [
-  "Metallica",
-  "Taylor Swift",
-  "Lady Gaga",
-  "Ed Sheeran",
-  "Billie Eilish",
-  "Harry Styles",
-  "Bruce Springsteen",
-  "The Weeknd",
+  "Riyadh, Saudi Arabia",
+  "…and many, many more",
 ];
 
 export function Work() {
@@ -42,9 +47,9 @@ export function Work() {
         {/* Venues */}
         <div>
           <Eyebrow>{t("eyebrow")}</Eyebrow>
-          <h2 className="font-display text-4xl font-medium text-cream sm:text-5xl md:text-6xl">
-            {t("venuesHeading")}
-          </h2>
+          <p className="mt-6 max-w-3xl text-base leading-relaxed text-cream md:text-lg">
+            {t("venuesIntro")}
+          </p>
           <motion.ul
             initial="hidden"
             whileInView="show"
@@ -68,44 +73,9 @@ export function Work() {
               </motion.li>
             ))}
           </motion.ul>
-          <p className="mt-10 max-w-2xl text-base leading-relaxed text-mist/75 md:text-lg">
+          <p className="mt-10 max-w-3xl whitespace-pre-line text-base leading-relaxed text-cream md:text-lg">
             {t("venuesCaption")}
           </p>
-        </div>
-
-        {/* Tours & productions */}
-        <div>
-          <h3 className="font-display text-3xl font-medium text-cream sm:text-4xl md:text-5xl">
-            {t("toursHeading")}
-          </h3>
-          <p className="mt-8 max-w-3xl text-base leading-relaxed text-mist/80 md:text-lg">
-            {t.rich("toursIntro", {
-              names: ARTISTS.join(", "),
-              artists: (chunks) => (
-                <strong className="font-semibold text-cream">{chunks}</strong>
-              ),
-            })}
-          </p>
-
-          <div className="mt-10 max-w-3xl">
-            <div className="mb-3 text-xs uppercase tracking-[0.28em] text-neon-300">
-              {t("highlightsLabel")}
-            </div>
-            <ul className="space-y-3 text-mist/85">
-              <li className="flex gap-3">
-                <span className="mt-1 h-1.5 w-1.5 flex-none rounded-full bg-neon-400 shadow-[0_0_6px_#b829e8]" />
-                <span>{t("highlights.esc")}</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="mt-1 h-1.5 w-1.5 flex-none rounded-full bg-neon-400 shadow-[0_0_6px_#b829e8]" />
-                <span>{t("highlights.cirque")}</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="mt-1 h-1.5 w-1.5 flex-none rounded-full bg-neon-400 shadow-[0_0_6px_#b829e8]" />
-                <span>{t("highlights.laver")}</span>
-              </li>
-            </ul>
-          </div>
         </div>
       </div>
     </SectionFrame>

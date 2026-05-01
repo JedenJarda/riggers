@@ -4,12 +4,14 @@ import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
 
-type MemberId = "jarda" | "ales" | "filip";
+type MemberId = "jarda" | "ales" | "filip" | "petr" | "hugo";
 
 const PHOTO_GRADIENTS: Record<MemberId, string> = {
   jarda: "from-[#5a2a85] via-[#b829e8] to-[#3a4a96]",
   ales: "from-[#4a2a85] via-[#8e3dd8] to-[#2d336b]",
   filip: "from-[#6a3aa0] via-[#c149ff] to-[#3a4a96]",
+  petr: "from-[#3d2785] via-[#a040d0] to-[#2d4a96]",
+  hugo: "from-[#5d2a95] via-[#c64eff] to-[#3a3a86]",
 };
 
 export function CrewModal({
@@ -74,7 +76,7 @@ export function CrewModal({
             <div className="flex max-h-[70vh] flex-1 flex-col overflow-y-auto px-6 py-7 md:px-8 md:py-9">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <div className="text-xs uppercase tracking-[0.28em] text-neon-300">
+                  <div className="whitespace-pre-line text-xs uppercase tracking-[0.28em] text-neon-300">
                     {t(`members.${memberId}.role`)}
                   </div>
                   <h3 className="mt-2 font-display text-4xl font-medium text-cream">
@@ -96,12 +98,14 @@ export function CrewModal({
               <p className="mt-6 text-base leading-relaxed text-mist/85">
                 {t(`members.${memberId}.shortBio`)}
               </p>
-              <p className="mt-4 text-base leading-relaxed text-mist/80">
+              <p className="mt-4 whitespace-pre-line text-base leading-relaxed text-mist/80">
                 {t(`members.${memberId}.longBio`)}
               </p>
-              <p className="mt-4 text-base leading-relaxed text-mist/70">
-                {t(`members.${memberId}.projects`)}
-              </p>
+              {t(`members.${memberId}.projects`).trim() && (
+                <p className="mt-4 text-base leading-relaxed text-mist/70">
+                  {t(`members.${memberId}.projects`)}
+                </p>
+              )}
 
               <div className="mt-6 flex flex-wrap gap-1.5">
                 {t(`members.${memberId}.tags`)

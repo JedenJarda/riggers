@@ -7,8 +7,8 @@ import { Calendar } from "./Calendar";
 
 // Placeholders — Jarda overrides with the real channel contacts before
 // go-live. Kept here (not in i18n) so changes are a single edit.
-const CONTACT_EMAIL = "hello@riggers.cz";
-const CONTACT_PHONE = "+420 XXX XXX XXX";
+const CONTACT_EMAIL = "booking@riggers.cz";
+const CONTACT_PHONE = "+420 733 284 648";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
@@ -62,12 +62,15 @@ export function BookUs() {
     "w-full rounded-md border border-mist/20 bg-ink-900/60 px-4 py-3 text-sm text-cream placeholder:text-mist/40 transition-colors focus:border-neon-400/70 focus:outline-none";
 
   return (
-    <SectionFrame id="book" className="bg-ink-950 py-28 md:py-36">
+    <SectionFrame id="book" className="bg-ink-950 py-28 md:pt-36 md:pb-[74px]">
       <div className="mx-auto max-w-5xl px-6 md:px-12 lg:px-20">
         <Eyebrow>{t("eyebrow")}</Eyebrow>
         <h2 className="font-display text-4xl font-medium text-cream sm:text-5xl md:text-6xl">
           {t("heading")}
         </h2>
+        <p className="mt-5 max-w-2xl text-base leading-relaxed text-cream/90 md:text-lg">
+          {t("intro")}
+        </p>
         <p className="mt-4 max-w-xl text-base leading-relaxed text-mist/75 md:text-lg">
           {t("subhead")}
         </p>
@@ -115,7 +118,6 @@ export function BookUs() {
                   type="text"
                   value={eventType}
                   onChange={(e) => setEventType(e.target.value)}
-                  placeholder={t("form.eventTypePlaceholder")}
                   className={fieldBase}
                 />
               </label>

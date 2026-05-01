@@ -5,9 +5,9 @@ import { useTranslations } from "next-intl";
 import { FaqModal } from "./FaqModal";
 import { Wordmark } from "./Wordmark";
 
-// Matches the placeholders in BookUs.tsx — swap both before go-live.
-const CONTACT_EMAIL = "hello@riggers.cz";
-const CONTACT_PHONE = "+420 XXX XXX XXX";
+// Matches the contacts in BookUs.tsx — keep both in sync.
+const CONTACT_EMAIL = "booking@riggers.cz";
+const CONTACT_PHONE = "+420 733 284 648";
 
 export function Footer() {
   const t = useTranslations("Footer");
