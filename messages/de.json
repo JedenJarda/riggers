@@ -156,7 +156,8 @@
       "required": "Pflichtfeld",
       "invalidEmail": "Ungültige E-Mail"
     },
-    "alternative": "Oder schreibt uns: <email></email> · Ruft an: <phone></phone>"
+    "alternative": "Oder schreibt uns: <email></email>",
+    "alternativeCall": "Ruft an: <phone></phone>"
   },
   "Faq": {
     "openLabel": "FAQ",

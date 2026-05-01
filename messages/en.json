@@ -156,7 +156,8 @@
       "required": "Required",
       "invalidEmail": "Looks like an invalid email"
     },
-    "alternative": "Or just email us: <email></email> · Call: <phone></phone>"
+    "alternative": "Or just email us: <email></email>",
+    "alternativeCall": "Call: <phone></phone>"
   },
   "Faq": {
     "openLabel": "FAQ",

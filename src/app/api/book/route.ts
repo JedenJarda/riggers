@@ -14,7 +14,7 @@ const TO = process.env.BOOKING_TO_ADDRESS ?? "jaroslavstuchlik7@gmail.com";
 type Payload = {
   dates?: string[];
   venue?: string;
-  riggers?: number;
+  riggers?: number | null;
   eventType?: string;
   email?: string;
   phone?: string;
@@ -55,13 +55,20 @@ export async function POST(req: Request) {
 
   const dates = body.dates.slice().sort().join(", ");
   const venue = body.venue?.trim() || "(not specified)";
-  const riggers = Number.isFinite(body.riggers) ? String(body.riggers) : "(not specified)";
+  const riggers =
+    typeof body.riggers === "number" && body.riggers > 0
+      ? String(body.riggers)
+      : "(not specified)";
   const eventType = body.eventType?.trim() || "(not specified)";
   const phone = body.phone?.trim() || "(not provided)";
   const note = body.note?.trim() || "(none)";
   const dayWord = body.dates.length === 1 ? "day" : "days";
 
-  const subject = `New booking — ${venue} (${riggers} riggers, ${body.dates.length} ${dayWord})`;
+  const riggerSuffix =
+    typeof body.riggers === "number" && body.riggers > 0
+      ? `${body.riggers} ${body.riggers === 1 ? "rigger" : "riggers"}, `
+      : "";
+  const subject = `New booking — ${venue} (${riggerSuffix}${body.dates.length} ${dayWord})`;
 
   const rows: [string, string][] = [
     ["Dates", dates],

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Eyebrow, SectionFrame } from "./SectionFrame";
 import { Calendar } from "./Calendar";
@@ -17,13 +17,33 @@ export function BookUs() {
   const locale = useLocale();
   const [dates, setDates] = useState<Set<string>>(new Set());
   const [venue, setVenue] = useState("");
-  const [riggers, setRiggers] = useState(1);
+  const [riggers, setRiggers] = useState<number | null>(null);
   const [eventType, setEventType] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [note, setNote] = useState("");
   const [status, setStatus] = useState<SubmitState>("idle");
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [riggersOpen, setRiggersOpen] = useState(false);
+  const riggersRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!riggersOpen) return;
+    function onDocClick(e: MouseEvent) {
+      if (!riggersRef.current?.contains(e.target as Node)) {
+        setRiggersOpen(false);
+      }
+    }
+    function onEsc(e: KeyboardEvent) {
+      if (e.key === "Escape") setRiggersOpen(false);
+    }
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onEsc);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onEsc);
+    };
+  }, [riggersOpen]);
 
   const emailValid = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
@@ -112,22 +132,65 @@ export function BookUs() {
                   className={fieldBase}
                 />
               </label>
-              <label className="block">
+              <div className="block">
                 <span className="mb-2 block text-xs uppercase tracking-[0.22em] text-mist/60">
                   {t("form.riggers")}
                 </span>
-                <select
-                  value={riggers}
-                  onChange={(e) => setRiggers(Number(e.target.value))}
-                  className={`${fieldBase} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22 viewBox=%220 0 12 8%22 fill=%22none%22 stroke=%22%23d172ff%22 stroke-width=%221.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><polyline points=%221 1 6 6 11 1%22/></svg>')] bg-[length:12px_8px] bg-[right_1rem_center] bg-no-repeat pr-10`}
-                >
-                  {[1, 2, 3, 4, 5].map((n) => (
-                    <option key={n} value={n}>
-                      {n}
-                    </option>
-                  ))}
-                </select>
-              </label>
+                <div ref={riggersRef} className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setRiggersOpen((o) => !o)}
+                    aria-haspopup="listbox"
+                    aria-expanded={riggersOpen}
+                    className={`${fieldBase} flex items-center justify-between text-left`}
+                  >
+                    <span className={riggers === null ? "text-mist/40" : ""}>
+                      {riggers ?? " "}
+                    </span>
+                    <svg
+                      width="12"
+                      height="8"
+                      viewBox="0 0 12 8"
+                      fill="none"
+                      stroke="#d172ff"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={`transition-transform duration-200 ${riggersOpen ? "rotate-180" : ""}`}
+                      aria-hidden
+                    >
+                      <polyline points="1 1 6 6 11 1" />
+                    </svg>
+                  </button>
+                  {riggersOpen && (
+                    <ul
+                      role="listbox"
+                      className="absolute left-0 right-0 top-full z-20 mt-2 overflow-hidden rounded-md border border-mist/20 bg-ink-900 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+                    >
+                      {[1, 2, 3, 4, 5].map((n) => (
+                        <li key={n}>
+                          <button
+                            type="button"
+                            role="option"
+                            aria-selected={riggers === n}
+                            onClick={() => {
+                              setRiggers(riggers === n ? null : n);
+                              setRiggersOpen(false);
+                            }}
+                            className={`block w-full px-4 py-3 text-left text-sm transition-colors duration-150 hover:bg-neon-500/25 ${
+                              riggers === n
+                                ? "bg-neon-500/15 text-neon-200"
+                                : "text-cream"
+                            }`}
+                          >
+                            {n}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
               <label className="block">
                 <span className="mb-2 block text-xs uppercase tracking-[0.22em] text-mist/60">
                   {t("form.eventType")}
@@ -200,7 +263,7 @@ export function BookUs() {
               <button
                 type="submit"
                 disabled={status === "submitting"}
-                className="group inline-flex items-center justify-center gap-3 border border-neon-400/70 bg-transparent px-8 py-4 text-sm font-medium uppercase tracking-[0.22em] text-cream transition-all duration-300 hover:border-neon-300 hover:bg-neon-500/10 hover:[box-shadow:var(--shadow-neon-md)] disabled:opacity-60"
+                className="group inline-flex shrink-0 items-center justify-center gap-3 whitespace-nowrap border border-neon-400/70 bg-transparent px-8 py-4 text-sm font-medium uppercase tracking-[0.22em] text-cream transition-all duration-300 hover:border-neon-300 hover:bg-neon-500/10 hover:[box-shadow:var(--shadow-neon-md)] disabled:opacity-60"
               >
                 {status === "submitting" ? t("form.submitting") : t("form.submit")}
                 <span aria-hidden className="text-neon-300 transition-transform duration-300 group-hover:translate-x-0.5">
@@ -208,26 +271,32 @@ export function BookUs() {
                 </span>
               </button>
 
-              <p className="text-sm text-mist/70">
-                {t.rich("alternative", {
-                  email: () => (
-                    <a
-                      href={`mailto:${CONTACT_EMAIL}`}
-                      className="text-neon-200 underline-offset-4 hover:underline"
-                    >
-                      {CONTACT_EMAIL}
-                    </a>
-                  ),
-                  phone: () => (
-                    <a
-                      href={`tel:${CONTACT_PHONE.replace(/\s+/g, "")}`}
-                      className="text-neon-200 underline-offset-4 hover:underline"
-                    >
-                      {CONTACT_PHONE}
-                    </a>
-                  ),
-                })}
-              </p>
+              <div className="text-right text-sm font-medium uppercase tracking-[0.22em] text-mist/70">
+                <p>
+                  {t.rich("alternative", {
+                    email: () => (
+                      <a
+                        href={`mailto:${CONTACT_EMAIL}`}
+                        className="text-neon-200 underline-offset-4 hover:underline"
+                      >
+                        {CONTACT_EMAIL}
+                      </a>
+                    ),
+                  })}
+                </p>
+                <p className="mt-1">
+                  {t.rich("alternativeCall", {
+                    phone: () => (
+                      <a
+                        href={`tel:${CONTACT_PHONE.replace(/\s+/g, "")}`}
+                        className="text-neon-200 underline-offset-4 hover:underline"
+                      >
+                        {CONTACT_PHONE}
+                      </a>
+                    ),
+                  })}
+                </p>
+              </div>
             </div>
           </form>
         )}

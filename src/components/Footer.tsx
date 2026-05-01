@@ -6,6 +6,7 @@ import { FaqModal } from "./FaqModal";
 import { Wordmark } from "./Wordmark";
 
 // Matches the contacts in BookUs.tsx — keep both in sync.
+const CONTACT_EMAIL_PERSONAL = "jarda@riggers.cz";
 const CONTACT_EMAIL = "booking@riggers.cz";
 const CONTACT_PHONE = "+420 733 284 648";
 
@@ -30,8 +31,14 @@ export function Footer() {
             {t("contactLabel")}
           </div>
           <a
-            href={`mailto:${CONTACT_EMAIL}`}
+            href={`mailto:${CONTACT_EMAIL_PERSONAL}`}
             className="block text-sm text-cream underline-offset-4 transition-colors hover:text-neon-200 hover:underline"
+          >
+            {CONTACT_EMAIL_PERSONAL}
+          </a>
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="mt-1 block text-sm text-cream underline-offset-4 transition-colors hover:text-neon-200 hover:underline"
           >
             {CONTACT_EMAIL}
           </a>

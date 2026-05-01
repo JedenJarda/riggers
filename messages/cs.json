@@ -156,7 +156,8 @@
       "required": "Povinné",
       "invalidEmail": "Neplatný email"
     },
-    "alternative": "Nebo nám napište: <email></email> · Zavolejte: <phone></phone>"
+    "alternative": "Nebo nám napište: <email></email>",
+    "alternativeCall": "Zavolejte: <phone></phone>"
   },
   "Faq": {
     "openLabel": "FAQ",
