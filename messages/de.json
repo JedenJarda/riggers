@@ -142,6 +142,7 @@
     "selectedLabel": "Ausgewählte Tage",
     "form": {
       "venue": "Stadt / Venue",
+      "riggers": "Anzahl Rigger",
       "eventType": "Event-Typ",
       "email": "E-Mail",
       "phone": "Telefon",

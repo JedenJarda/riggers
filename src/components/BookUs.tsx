@@ -17,6 +17,7 @@ export function BookUs() {
   const locale = useLocale();
   const [dates, setDates] = useState<Set<string>>(new Set());
   const [venue, setVenue] = useState("");
+  const [riggers, setRiggers] = useState(1);
   const [eventType, setEventType] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -45,6 +46,7 @@ export function BookUs() {
         body: JSON.stringify({
           dates: Array.from(dates).sort(),
           venue,
+          riggers,
           eventType,
           email,
           phone,
@@ -98,7 +100,7 @@ export function BookUs() {
               <Calendar value={dates} onChange={setDates} locale={locale} />
             </div>
 
-            <div className="grid gap-5 md:grid-cols-2">
+            <div className="grid gap-5 md:grid-cols-3">
               <label className="block">
                 <span className="mb-2 block text-xs uppercase tracking-[0.22em] text-mist/60">
                   {t("form.venue")}
@@ -112,6 +114,22 @@ export function BookUs() {
               </label>
               <label className="block">
                 <span className="mb-2 block text-xs uppercase tracking-[0.22em] text-mist/60">
+                  {t("form.riggers")}
+                </span>
+                <select
+                  value={riggers}
+                  onChange={(e) => setRiggers(Number(e.target.value))}
+                  className={`${fieldBase} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22 viewBox=%220 0 12 8%22 fill=%22none%22 stroke=%22%23d172ff%22 stroke-width=%221.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><polyline points=%221 1 6 6 11 1%22/></svg>')] bg-[length:12px_8px] bg-[right_1rem_center] bg-no-repeat pr-10`}
+                >
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <option key={n} value={n}>
+                      {n}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="block">
+                <span className="mb-2 block text-xs uppercase tracking-[0.22em] text-mist/60">
                   {t("form.eventType")}
                 </span>
                 <input
@@ -121,6 +139,9 @@ export function BookUs() {
                   className={fieldBase}
                 />
               </label>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-2">
               <label className="block">
                 <span className="mb-2 block text-xs uppercase tracking-[0.22em] text-mist/60">
                   {t("form.email")}{" "}

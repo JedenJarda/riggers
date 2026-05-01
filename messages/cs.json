@@ -142,6 +142,7 @@
     "selectedLabel": "Vybrané termíny",
     "form": {
       "venue": "Město / Hala",
+      "riggers": "Počet riggerů",
       "eventType": "Typ akce",
       "email": "Email",
       "phone": "Telefon",
