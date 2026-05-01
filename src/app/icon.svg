@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <filter id="g" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2" result="b1" />
+      <feGaussianBlur stdDeviation="0.8" result="b2" />
+      <feMerge>
+        <feMergeNode in="b1" />
+        <feMergeNode in="b2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="64" height="64" rx="10" fill="#05060d" />
+  <g stroke="#b829e8" stroke-width="3.5" fill="none" stroke-linecap="square" filter="url(#g)">
+    <rect x="14" y="14" width="36" height="36" />
+    <line x1="32" y1="14" x2="32" y2="50" />
+    <line x1="14" y1="32" x2="50" y2="32" />
+  </g>
+</svg>
