@@ -154,7 +154,11 @@
       "success": "Thanks — we'll be in touch.",
       "error": "Something broke. Try emailing us directly.",
       "required": "Required",
-      "invalidEmail": "Looks like an invalid email"
+      "invalidEmail": "Looks like an invalid email",
+      "noDatesTitle": "No dates picked",
+      "noDatesBody": "You haven't selected any dates in the calendar. Want to send the request anyway? We'll sort the dates with you on the call.",
+      "noDatesConfirm": "Yes, send",
+      "noDatesCancel": "Back to calendar"
     },
     "alternative": "Or just email us: <email></email>",
     "alternativeCall": "Call: <phone></phone>"

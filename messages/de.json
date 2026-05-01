@@ -154,7 +154,11 @@
       "success": "Danke — wir melden uns.",
       "error": "Irgendwas ist kaputt. Schreibt uns lieber direkt.",
       "required": "Pflichtfeld",
-      "invalidEmail": "Ungültige E-Mail"
+      "invalidEmail": "Ungültige E-Mail",
+      "noDatesTitle": "Keine Tage gewählt",
+      "noDatesBody": "Im Kalender sind noch keine Tage markiert. Wollt ihr die Anfrage trotzdem schicken? Die Termine klären wir am Telefon.",
+      "noDatesConfirm": "Ja, schicken",
+      "noDatesCancel": "Zurück zum Kalender"
     },
     "alternative": "Oder schreibt uns: <email></email>",
     "alternativeCall": "Ruft an: <phone></phone>"

@@ -154,7 +154,11 @@
       "success": "Díky — brzy se ozveme.",
       "error": "Něco se rozbilo. Napište nám radši emailem.",
       "required": "Povinné",
-      "invalidEmail": "Neplatný email"
+      "invalidEmail": "Neplatný email",
+      "noDatesTitle": "Žádné termíny",
+      "noDatesBody": "V kalendáři jste neoznačili žádné dny. Chcete formulář odeslat i tak? Termíny doladíme po telefonu.",
+      "noDatesConfirm": "Ano, odeslat",
+      "noDatesCancel": "Zpět do kalendáře"
     },
     "alternative": "Nebo nám napište: <email></email>",
     "alternativeCall": "Zavolejte: <phone></phone>"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
 import { Eyebrow, SectionFrame } from "./SectionFrame";
 import { Calendar } from "./Calendar";
@@ -25,7 +26,9 @@ export function BookUs() {
   const [status, setStatus] = useState<SubmitState>("idle");
   const [emailError, setEmailError] = useState<string | null>(null);
   const [riggersOpen, setRiggersOpen] = useState(false);
+  const [confirmNoDates, setConfirmNoDates] = useState(false);
   const riggersRef = useRef<HTMLDivElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!riggersOpen) return;
@@ -45,19 +48,29 @@ export function BookUs() {
     };
   }, [riggersOpen]);
 
+  useEffect(() => {
+    if (!confirmNoDates) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setConfirmNoDates(false);
+    }
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [confirmNoDates]);
+
   const emailValid = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
-  async function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!email.trim()) {
-      setEmailError(t("form.required"));
-      return;
-    }
-    if (!emailValid(email)) {
-      setEmailError(t("form.invalidEmail"));
-      return;
-    }
-    setEmailError(null);
+  function flagEmail(message: string) {
+    setEmailError(message);
+    emailRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(() => emailRef.current?.focus({ preventScroll: true }), 320);
+  }
+
+  async function sendBooking() {
     setStatus("submitting");
     try {
       const res = await fetch("/api/book", {
@@ -78,6 +91,24 @@ export function BookUs() {
     } catch {
       setStatus("error");
     }
+  }
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email.trim()) {
+      flagEmail(t("form.required"));
+      return;
+    }
+    if (!emailValid(email)) {
+      flagEmail(t("form.invalidEmail"));
+      return;
+    }
+    setEmailError(null);
+    if (dates.size === 0) {
+      setConfirmNoDates(true);
+      return;
+    }
+    void sendBooking();
   }
 
   const fieldBase =
@@ -211,6 +242,7 @@ export function BookUs() {
                   <span className="text-neon-300">*</span>
                 </span>
                 <input
+                  ref={emailRef}
                   type="email"
                   value={email}
                   onChange={(e) => {
@@ -218,6 +250,7 @@ export function BookUs() {
                     if (emailError) setEmailError(null);
                   }}
                   required
+                  aria-invalid={emailError ? true : undefined}
                   className={`${fieldBase} ${emailError ? "border-red-500/60" : ""}`}
                 />
                 {emailError && (
@@ -301,6 +334,65 @@ export function BookUs() {
           </form>
         )}
       </div>
+
+      <AnimatePresence>
+        {confirmNoDates && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center px-4 py-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="no-dates-title"
+          >
+            <button
+              type="button"
+              onClick={() => setConfirmNoDates(false)}
+              aria-label={t("form.noDatesCancel")}
+              className="absolute inset-0 cursor-default bg-ink-950/90 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.97, y: 8 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="relative z-10 w-full max-w-md rounded-2xl border border-neon-400/30 bg-ink-900 p-7 shadow-[0_40px_80px_-20px_rgba(184,41,232,0.25)] md:p-8"
+            >
+              <h3
+                id="no-dates-title"
+                className="font-display text-2xl font-medium text-cream md:text-3xl"
+              >
+                {t("form.noDatesTitle")}
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-mist/80 md:text-base">
+                {t("form.noDatesBody")}
+              </p>
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-end">
+                <button
+                  type="button"
+                  onClick={() => setConfirmNoDates(false)}
+                  className="inline-flex items-center justify-center rounded-md border border-mist/25 px-5 py-3 text-xs font-medium uppercase tracking-[0.22em] text-mist/80 transition-colors hover:border-mist/50 hover:text-cream"
+                >
+                  {t("form.noDatesCancel")}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setConfirmNoDates(false);
+                    void sendBooking();
+                  }}
+                  className="inline-flex items-center justify-center gap-2 rounded-md border border-neon-400/70 bg-neon-500/10 px-5 py-3 text-xs font-medium uppercase tracking-[0.22em] text-cream transition-all hover:border-neon-300 hover:bg-neon-500/20 hover:[box-shadow:var(--shadow-neon-md)]"
+                >
+                  {t("form.noDatesConfirm")}
+                  <span aria-hidden className="text-neon-300">→</span>
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </SectionFrame>
   );
 }

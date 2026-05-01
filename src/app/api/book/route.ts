@@ -49,11 +49,9 @@ export async function POST(req: Request) {
   if (!EMAIL_RE.test(email)) {
     return NextResponse.json({ ok: false, error: "invalid_email" }, { status: 400 });
   }
-  if (!Array.isArray(body.dates) || body.dates.length === 0) {
-    return NextResponse.json({ ok: false, error: "no_dates" }, { status: 400 });
-  }
 
-  const dates = body.dates.slice().sort().join(", ");
+  const datesArr = Array.isArray(body.dates) ? body.dates : [];
+  const dates = datesArr.length > 0 ? datesArr.slice().sort().join(", ") : "(no dates selected)";
   const venue = body.venue?.trim() || "(not specified)";
   const riggers =
     typeof body.riggers === "number" && body.riggers > 0
@@ -62,13 +60,16 @@ export async function POST(req: Request) {
   const eventType = body.eventType?.trim() || "(not specified)";
   const phone = body.phone?.trim() || "(not provided)";
   const note = body.note?.trim() || "(none)";
-  const dayWord = body.dates.length === 1 ? "day" : "days";
 
   const riggerSuffix =
     typeof body.riggers === "number" && body.riggers > 0
       ? `${body.riggers} ${body.riggers === 1 ? "rigger" : "riggers"}, `
       : "";
-  const subject = `New booking — ${venue} (${riggerSuffix}${body.dates.length} ${dayWord})`;
+  const datesPart =
+    datesArr.length > 0
+      ? `${riggerSuffix}${datesArr.length} ${datesArr.length === 1 ? "day" : "days"}`
+      : `${riggerSuffix}no dates`;
+  const subject = `New booking — ${venue} (${datesPart})`;
 
   const rows: [string, string][] = [
     ["Dates", dates],
